@@ -21,6 +21,6 @@
     <property name="hibernate.c3p0.idle_test_period">3000</property>
 
 
-    <!--<mapping class="org.example.entity.Customer"/>-->
+    <mapping class="org.example.ecommerrce_web.entity.User"/>
   </session-factory>
 </hibernate-configuration>

@@ -54,6 +54,8 @@
 
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <section id="registration_section">
     <div id="right">
@@ -92,25 +94,28 @@
     </div>
 </section>
 
+
+
 <%
     String msg = request.getParameter("errorpassword");
     if (msg != null) {
 %>
 
-
-
 <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Passwords do not match!',
+    })
     document.getElementById("confirm_password").style.borderColor = "red";
-    document.getElementById("confirm_password").append()
-
-
 </script>
 <%
     }
 %>
 
+
+
 <script src="JQ/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
