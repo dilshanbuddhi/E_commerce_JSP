@@ -56,7 +56,6 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
 <section id="registration_section">
     <div id="right">
         <div class="card">
