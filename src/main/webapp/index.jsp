@@ -45,6 +45,7 @@
 
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <section id="login_section">
     <div id="right">
@@ -53,17 +54,17 @@
                 <p class="card-text" style="color: #6c757d;">Welcome Back.</p>
                 <h2 class="card-title" style="color: #dc5b22; font-weight: bold; margin-bottom: 15px;">Sign In</h2>
                 <p class="card-text" style="color: #6c757d;">Please enter your login details below.</p>
-                <form>
+                <form action="login" method="post">
                     <div class="mb-3 text-start">
-                        <label for="email" class="form-label" style="font-size: 14px; color: #6c757d; font-weight: bold;">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter your email" style="border-radius: 10px;">
+                        <label  for="email" class="form-label" style="font-size: 14px; color: #6c757d; font-weight: bold;">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" style="border-radius: 10px;">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="password" class="form-label" style="font-size: 14px; color: #6c757d; font-weight: bold;">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password" style="border-radius: 10px;">
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" style="border-radius: 10px;">
                     </div>
                     <br>
-                    <a href="#" class="btn" style="background-color: #ef7f4b; color: white; font-size: 16px; padding: 10px 30px; border-radius: 10px; border: none; transition: all 0.3s ease;">Sign In</a>
+                    <button type="submit" class="btn" style="background: #dc5b22; color: white; font-size: 16px; padding: 10px 30px; border-radius: 10px; border: none; transition: all 0.3s ease;">Sign in</button>
                 </form>
                 <br>
                 <p style="color: #9f9797">You dont have an account? <a href="registration.jsp" style="color: #dc5b22">Sign Up</a></p>
@@ -76,6 +77,21 @@
     </div>
 
 </section>
+
+<%
+String message =  request.getParameter("error");
+    System.out.println("jjjjjj"+message);
+%>
+
+<% if (message != null) { %>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Passwords do not match!',
+        })
+   </script>
+<% } %>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
