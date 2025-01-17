@@ -12,7 +12,7 @@ public class MyListner implements ServletContextListener {
     private static SessionFactory sessionFactory;
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//hgyufyujh
+
         try {
             System.out.println("Initializing Hibernate");
             sessionFactory = new Configuration().configure().buildSessionFactory();
