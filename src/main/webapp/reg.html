@@ -1,171 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <style>
-    body {
-      background-color: #ffeede;
-    }
-
-    .navbar {
-      background-color: #f5d5b2;
-    }
-
-    .card {
-      border-radius: 15px;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    .card-title {
-      font-weight: bold;
-    }
-
-    .card-text {
-      color: #6c757d;
-    }
-
-    .btn-custom {
-      background-color: #ef7f4b;
-      color: white;
-      border: none;
-    }
-
-    .btn-custom:hover {
-      background-color: #dc5b22;
-    }
-
-    .container {
-      margin-top: 50px;
-    }
-
-    .icon {
-      font-size: 40px;
-      color: #ef7f4b;
-    }
-
-    .card-footer {
-      margin-top: auto;
-    }
-
-    #set{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      flex-direction: row;
-    }
-    #set div{
-      padding: 20px;
-    }
-  </style>
+  <title>Login Form</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Optional Bootstrap for layout -->
 </head>
+<style>
+  /* General styles */
+  body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+  }
 
+  /* Login container */
+  .login-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Nav tabs */
+  .nav-tabs .nav-link {
+    color: #a77c65;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .nav-tabs .nav-link.active {
+    border-color: #a77c65;
+    color: #a77c65;
+  }
+
+  /* Social login buttons */
+  .social-login {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .social-btn {
+    width: 150px;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .google-btn {
+    background-color: #333;
+    color: white;
+  }
+
+  .facebook-btn {
+    color: #333;
+  }
+
+  /* Form section */
+  .form-control {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .btn-block {
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .btn-block:hover {
+    background-color: #555;
+  }
+
+  /* Forgot password link */
+  .forgot-password {
+    font-size: 14px;
+    color: #a77c65;
+    text-decoration: none;
+  }
+
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+
+</style>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#" style="color: #dc5b22; font-weight: bold; font-size: 20px">Admin Dashboard</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">User </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Product </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Category </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Order </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-        <button class="btn btn-outline-danger" type="submit" style="margin-left: 10px">Logout</button>
-      </form>
-    </div>
-  </div>
-</nav>
+<div class="login-container">
+  <ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">LOG IN</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">SIGN UP</a>
+    </li>
+  </ul>
 
-<div class="container">
-  <div id="set">
-    <!-- Product Management Card -->
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 d-flex flex-column text-center p-3">
-        <div class="card-body">
-          <i class="icon bi bi-box-seam"></i>
-          <h5 class="card-title">Product Management</h5>
-          <p class="card-text">Add, update, view, or delete products in the store.</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" class="btn btn-custom">Manage Products</a>
-        </div>
-      </div>
+  <div class="login-section">
+    <h4 class="text-center">Log-In With Social</h4>
+
+    <!-- Social Login Buttons -->
+    <div class="social-login text-center">
+      <button class="btn btn-dark social-btn google-btn">G Google</button>
+      <button class="btn btn-outline-dark social-btn facebook-btn">f Facebook</button>
     </div>
 
-    <!-- Category Management Card -->
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 d-flex flex-column text-center p-3">
-        <div class="card-body">
-          <i class="icon bi bi-tags"></i>
-          <h5 class="card-title">Category Management</h5>
-          <p class="card-text">Add, view, update, or delete product categories.</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" class="btn btn-custom">Manage Categories</a>
-        </div>
-      </div>
-    </div>
+    <p class="text-center mt-3">Or Log-In With Email</p>
 
-    <!-- Order Management Card -->
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 d-flex flex-column text-center p-3">
-        <div class="card-body">
-          <i class="icon bi bi-receipt"></i>
-          <h5 class="card-title">Order Management</h5>
-          <p class="card-text">View and manage customer orders.</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" class="btn btn-custom">View Orders</a>
-        </div>
+    <!-- Email Login Form -->
+    <form>
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder="Enter Email Address" required>
       </div>
-    </div>
-
-    <!-- User Management Card -->
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 d-flex flex-column text-center p-3">
-        <div class="card-body">
-          <i class="icon bi bi-person"></i>
-          <h5 class="card-title">User Management</h5>
-          <p class="card-text">Activate, deactivate, or view customer accounts.</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" class="btn btn-custom">Manage Users</a>
-        </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Enter Password" required>
       </div>
-    </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Remember Me</label>
+        <a href="#" class="float-right forgot-password">Forgot Password?</a>
+      </div>
+      <button type="submit" class="btn btn-dark btn-block">LOG IN</button>
+    </form>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-
 </html>
