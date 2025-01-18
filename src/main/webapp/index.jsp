@@ -1,99 +1,218 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>JSP - Hello World</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Waggy Pet Shop</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
+        /* Applying the playful Baloo 2 font to key sections */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Baloo 2', cursive;
         }
 
-        #login_section {
-            background: #9f9797;
-            border-radius: 30px;
-            height: 100vh;
-            display: grid;
-            grid-template-columns: 5fr 3fr;
+        .py-5 {
+            padding-top: 0rem !important;
         }
 
-        #left {
-            background-color: #ffeede;
-            color: #fff;
-            padding: 20px;
+        .hero-section {
+            padding-top: 0;
+            background-color: #f8f2eb;
         }
 
-        #right {
+        .hero-section h1 {
+            color: #6c757d;
+            font-weight: lighter;
+            font-size: 4rem;
+        }
+
+        .hero-section span {
+            color: orange;
+        }
+
+        .hero-section img {
+            max-width: 100%;
+        }
+
+        .badge-warning {
+            background-color: #f0ad4e;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+        }
+
+        #text{
+            margin-top: -20px;
+        }
+
+        .btn-primary {
+            margin-left: 15px;
+            border-color: #6f6565;
+            background-color: #bfb6a8;
+
+        }
+
+        .btn-primary:hover {
+            background-color: #f8c78b;
+        }
+
+        footer {
+            background-color: #f8f2eb;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        #cardSec{
+            padding:20px;
+        }
+        #cardset{
+            padding-left:120px;
+            padding-right:120px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            padding: 20px;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
-
-        .card {
-            width: 20rem;
-            height: 29rem;
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;        }
-        #left img{
-            margin-top: 216px;
-            margin-left: -227px;
+        #cardSec h1{
+            margin-left: 100px;
+        }
+        .card{
+            margin:30px;
         }
     </style>
-
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<section id="login_section">
-    <div id="right">
-        <div class="card" style="width: 22rem; border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border: none;">
-            <div class="card-body text-center">
-                <p class="card-text" style="color: #6c757d;">Welcome Back.</p>
-                <h2 class="card-title" style="color: #dc5b22; font-weight: bold; margin-bottom: 15px;">Sign In</h2>
-                <p class="card-text" style="color: #6c757d;">Please enter your login details below.</p>
-                <form action="login" method="post">
-                    <div class="mb-3 text-start">
-                        <label  for="email" class="form-label" style="font-size: 14px; color: #6c757d; font-weight: bold;">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" style="border-radius: 10px;">
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label for="password" class="form-label" style="font-size: 14px; color: #6c757d; font-weight: bold;">Password</label>
-                        <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" style="border-radius: 10px;">
-                    </div>
-                    <br>
-                    <button type="submit" class="btn" style="background: #dc5b22; color: white; font-size: 16px; padding: 10px 30px; border-radius: 10px; border: none; transition: all 0.3s ease;">Sign in</button>
-                </form>
-                <br>
-                <p style="color: #9f9797">You dont have an account? <a href="registration.jsp" style="color: #dc5b22">Sign Up</a></p>
+<!-- Header / Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+
+            <img src="images/dog.png" height="40" width="40"/>  Waggy Pet Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.jsp">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <a href="registration.jsp" class="nav-link"><i class="bi bi-person"></i></a>
+                <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
+                <a href="#" class="nav-link position-relative">
+                    <i class="bi bi-cart"></i></a>
             </div>
         </div>
     </div>
-    <div id="left">
-        <img src="images/img.png" alt="" />
+</nav>
 
+<!-- Search Bar -->
+<div class="container my-4">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search For More Than 10,000 Products">
+        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
     </div>
+</div>
 
+<!-- Hero Section -->
+<section class="hero-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+
+
+            <div class="col-md-6" id="text">
+                <h1 class="display-4">Best Destination For <span>Your Pets</span></h1>
+                <p>Save 10 - 20% off</p>
+                <a href="#" class="btn btn-primary">Shop Now</a>
+            </div>
+
+            <div class="col-md-6">
+                <img src="images/banner-img.png" alt="Dog with toy" height="450" width="350" />
+            </div>
+        </div>
+    </div>
 </section>
 
-<%
-String message =  request.getParameter("error");
-    System.out.println("jjjjjj"+message);
-%>
+<Section id="cardSec">
+    <h1>Pet Clothes</h1>
+    <div id="cardset">
+        <div class="card" style="width: 12rem;">
+            <img src="images/item1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Dog Clothes</h5>
+                <p class="card-text">Description id here ..............................</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 12rem;">
+            <img src="images/item1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Dog Clothes</h5>
+                <p class="card-text">Description id here ..............................</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 12rem;">
+            <img src="images/item1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Dog Clothes</h5>
+                <p class="card-text">Description id here ..............................</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 12rem;">
+            <img src="images/item1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Dog Clothes</h5>
+                <p class="card-text">Description id here ..............................</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 12rem;">
+            <img src="images/item1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Dog Clothes</h5>
+                <p class="card-text">Description id here ..............................</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+    </div>
 
-<% if (message != null) { %>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Passwords do not match!',
-        })
-   </script>
-<% } %>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</Section>
+
+<!-- Footer -->
+<footer class="text-center py-4">
+    <div class="container">
+        <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
