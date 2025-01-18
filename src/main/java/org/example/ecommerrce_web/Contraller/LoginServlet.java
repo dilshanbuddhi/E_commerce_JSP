@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
-            response.sendRedirect("index.jsp?error=failed");
+             response.sendRedirect("index.jsp?error=failed");
             e.printStackTrace();
         }
     }
