@@ -65,7 +65,6 @@ public class AddUserServlet extends HttpServlet {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "Ijse@1234");
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM user")) {
-
             while (resultSet.next()) {
                 User user = new User();
                 user.setUserId(resultSet.getLong(1)); // Assuming `id` column exists in the database
