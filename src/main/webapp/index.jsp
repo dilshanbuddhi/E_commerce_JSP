@@ -130,6 +130,8 @@
     </div>
 </nav>
 
+
+<a href="admin_dashboard.jsp">admin dashboard</a>
 <!-- Search Bar -->
 <div class="container my-4">
     <div class="input-group">

@@ -186,7 +186,9 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Add User Button -->
-                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus"></i> Add New User</button>
+                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="bi bi-person-plus"></i> Add New User
+                </button>
 
                 <table class="table table-bordered table-hover">
                     <thead class="table-dark">
@@ -198,40 +200,38 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                <%
-                    List<User> users = (List<User>) request.getAttribute("users");
-
-                    if (users != null && !users.isEmpty()) {
-                %>
                     <tbody>
                     <%
-                    for (User user : users) {
-        %>
+                        List<User> users = (List<User>) request.getAttribute("users");
+                        if (users != null && !users.isEmpty()) {
+                            for (User user : users) {
+                    %>
                     <tr>
                         <td><%= user.getUserId() %></td>
                         <td><%= user.getUserName() %></td>
                         <td><%= user.getEmail() %></td>
                         <td><%= user.getRole() %></td>
                         <td>
-                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                <i class="bi bi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
                         </td>
                     </tr>
-
-                <%
-                    }
-                %>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr>
+                        <td colspan="5" class="text-center">No users found</td>
+                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
-                    <%
-                    }
-                %>
-                <!-- User Table -->
-
-                    <!-- Sample user data; replace with dynamic data -->
-
-                    <!-- More users can be dynamically added here -->
-
             </div>
         </div>
     </div>

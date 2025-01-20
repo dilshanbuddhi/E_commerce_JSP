@@ -140,7 +140,7 @@
                     <a class="nav-link" href="admin_dashboard.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="userManagement.jsp">User</a>
+                    <a class="nav-link" href="addUser">User</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="categoryManagement.jsp">Category</a>
