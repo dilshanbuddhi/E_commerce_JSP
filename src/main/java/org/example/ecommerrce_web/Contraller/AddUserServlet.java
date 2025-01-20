@@ -32,6 +32,7 @@ public class AddUserServlet extends HttpServlet {
         ServletContext context = req.getServletContext();
         SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         Session session = null;
+
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
