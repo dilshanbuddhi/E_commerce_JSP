@@ -228,23 +228,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="addUser" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" required>
+                        <input name="name" type="text" class="form-control" id="username" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input name="email" type="email" class="form-control" id="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input name="password" type="password" class="form-control" id="password">
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role" required>
+                        <select class="form-select" id="role" name="role" required>
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
                         </select>
