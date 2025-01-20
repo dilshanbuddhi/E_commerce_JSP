@@ -74,7 +74,6 @@ public class AddUserServlet extends HttpServlet {
                 user.setRole(resultSet.getString(4));
                 users.add(user);
             }
-
             req.setAttribute("users", users);
             req.getRequestDispatcher("userManagement.jsp").forward(req, resp);
 
