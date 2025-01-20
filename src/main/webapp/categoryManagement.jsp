@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: PC
+  Date: 1/19/2025
+  Time: 8:24 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Product Management</title>
+  <title>Category Management</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
   <!-- Bootstrap CSS -->
@@ -128,10 +135,10 @@
           <a class="nav-link" href="#">User</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Category</a>
+          <a class="nav-link active" href="#">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Product</a>
+          <a class="nav-link" href="#">Product</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Order</a>
@@ -143,7 +150,7 @@
     </div>
   </div>
 </nav>
-
+<br><br>
 <!-- Hero Section -->
 <section class="hero-section py-5">
   <div class="container">
@@ -151,48 +158,44 @@
       <div class="col-md-6" id="text">
         <br>
         <br>
-        <h1>Product <span>Management!</span></h1>
-        <h2>Manage All <span>Products from here</span></h2>
-        <p>You can add, update, or delete products.</p>
+        <h1>Category <span>Manage!</span></h1>
+        <h2>Manage All <span>Categories from here</span></h2>
+        <p>You can add, update, or delete product categories.</p>
       </div>
     </div>
   </div>
 </section>
 
 <br><br>
-<section class="product-management-section py-5">
+<section class="category-management-section py-5">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <!-- Add Product Button -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="bi bi-plus-square"></i> Add New Product</button>
+        <!-- Add Category Button -->
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="bi bi-plus-square"></i> Add New Category</button>
 
-        <!-- Product Table -->
+        <!-- Category Table -->
         <table class="table table-bordered table-hover">
           <thead class="table-dark">
           <tr>
             <th>ID</th>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th>Category Name</th>
+            <th>Description</th>
             <th>Actions</th>
           </tr>
           </thead>
           <tbody>
-          <!-- Sample product data; replace with dynamic data -->
+          <!-- Sample category data; replace with dynamic data -->
           <tr>
             <td>1</td>
-            <td>Dog Food</td>
             <td>Pet Food</td>
-            <td>$20.00</td>
-            <td>100</td>
+            <td>All types of pet food products</td>
             <td>
-              <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="bi bi-pencil"></i> Edit</button>
+              <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editCategoryModal"><i class="bi bi-pencil"></i> Edit</button>
               <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
             </td>
           </tr>
-          <!-- More products can be dynamically added here -->
+          <!-- More categories can be dynamically added here -->
           </tbody>
         </table>
       </div>
@@ -200,74 +203,50 @@
   </div>
 </section>
 
-<!-- Add Product Modal -->
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" required>
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="categoryName" required>
           </div>
           <div class="mb-3">
-            <label for="productCategory" class="form-label">Category</label>
-            <select class="form-select" id="productCategory" required>
-              <option value="">Select Category</option>
-              <option value="1">Pet Food</option>
-              <!-- Add more categories dynamically -->
-            </select>
+            <label for="categoryDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
           </div>
-          <div class="mb-3">
-            <label for="productPrice" class="form-label">Price</label>
-            <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
-          </div>
-          <div class="mb-3">
-            <label for="productQuantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id="productQuantity" min="1" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Add Product</button>
+          <button type="submit" class="btn btn-primary">Add Category</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Edit Product Modal -->
-<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="editProductName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="editProductName" required>
+            <label for="editCategoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="editCategoryName" value="Pet Food" required>
           </div>
           <div class="mb-3">
-            <label for="editProductCategory" class="form-label">Category</label>
-            <select class="form-select" id="editProductCategory" required>
-              <option value="">Select Category</option>
-              <option value="1">Pet Food</option>
-              <!-- Add more categories dynamically -->
-            </select>
+            <label for="editCategoryDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="editCategoryDescription" rows="3">All types of pet food products</textarea>
           </div>
-          <div class="mb-3">
-            <label for="editProductPrice" class="form-label">Price</label>
-            <input type="number" class="form-control" id="editProductPrice" min="0" step="0.01" required>
-          </div>
-          <div class="mb-3">
-            <label for="editProductQuantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id="editProductQuantity" min="1" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Update Product</button>
+          <button type="submit" class="btn btn-success">Update Category</button>
         </form>
       </div>
     </div>
@@ -285,4 +264,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

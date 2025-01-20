@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Buddhi
-  Date: 1/14/2025
-  Time: 7:45 PM
+  User: PC
+  Date: 1/19/2025
+  Time: 8:16 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Waggy Pet Shop</title>
+    <title>user management</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
@@ -161,12 +161,7 @@
 </nav>
 
 <!-- Search Bar -->
-<div class="container my-4">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search For More Than 10,000 Products">
-        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-    </div>
-</div>
+<br><br>
 
 <!-- Hero Section -->
 <section class="hero-section py-5">
@@ -177,45 +172,122 @@
             <div class="col-md-6" id="text">
                 <br>
                 <br>
-                <h1>Welcome <span>Admin!</span></h1>
-                <h2>Manage Your <span>Pet Shop</span> Effortlessly</h2>
-                <p>Take control of products, users, orders, and categories in one place.</p>
+                <h1>User <span>Management!</span></h1>
+                <h2>Manage All <span>Users from here</span></h2>
+                <p>you can add/update/delete all users</p>
             </div>
 
         </div>
     </div>
 </section>
-
-<section class="stats-section">
+<br><br>
+<section class="user-management-section py-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h3>Products</h3>
-                    <p class="stat-number">150</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h3>Orders</h3>
-                    <p class="stat-number">300</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h3>Users</h3>
-                    <p class="stat-number">120</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h3>Categories</h3>
-                    <p class="stat-number">12</p>
-                </div>
+            <div class="col-md-12">
+                <!-- Add User Button -->
+                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus"></i> Add New User</button>
+
+                <!-- User Table -->
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sample user data; replace with dynamic data -->
+                    <tr>
+                        <td>1</td>
+                        <td>john_doe</td>
+                        <td>john@example.com</td>
+                        <td>Admin</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <!-- More users can be dynamically added here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" required>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="editUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="editUsername" value="john_doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" value="john@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editRole" class="form-label">Role</label>
+                        <select class="form-select" id="editRole" required>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">
