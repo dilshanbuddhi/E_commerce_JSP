@@ -62,7 +62,7 @@ public class AddUserServlet extends HttpServlet {
         System.out.println("jjjjj");
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "Ijse@1234");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "1234");
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM user")) {
             while (resultSet.next()) {
