@@ -35,7 +35,11 @@ public class LoginServlet extends HttpServlet {
             session.getTransaction().commit();
 
             if (user != null) {
-                response.sendRedirect("admin_dashboard.jsp");
+                if (user.getRole().equals("admin")){
+                    response.sendRedirect("admin_dashboard.jsp");
+                }else {
+                    response.sendRedirect("index.jsp");
+                }
             } else {
                 response.sendRedirect("index.jsp?error=failed");
             }

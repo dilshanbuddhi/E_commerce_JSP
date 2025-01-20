@@ -129,19 +129,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="admin_dashboard.jsp"Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">User</a>
+          <a class="nav-link" href="userManagement.jsp">User</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Category</a>
+          <a class="nav-link active" href="categoryManagement.jsp">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Product</a>
+          <a class="nav-link" href="productManagement.jsp">Product</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Order</a>
+          <a class="nav-link" href="orderView.jsp">Order</a>
         </li>
       </ul>
       <div class="d-flex align-items-center">
