@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.example.ecommerrce_web.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: PC
   Date: 1/19/2025
@@ -168,7 +169,6 @@
     <div class="container">
         <div class="row align-items-center">
 
-
             <div class="col-md-6" id="text">
                 <br>
                 <br>
@@ -188,7 +188,6 @@
                 <!-- Add User Button -->
                 <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus"></i> Add New User</button>
 
-                <!-- User Table -->
                 <table class="table table-bordered table-hover">
                     <thead class="table-dark">
                     <tr>
@@ -199,21 +198,40 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
+                <%
+                    List<User> users = (List<User>) request.getAttribute("users");
+
+                    if (users != null && !users.isEmpty()) {
+                %>
                     <tbody>
-                    <!-- Sample user data; replace with dynamic data -->
+                    <%
+                    for (User user : users) {
+        %>
                     <tr>
-                        <td>1</td>
-                        <td>john_doe</td>
-                        <td>john@example.com</td>
-                        <td>Admin</td>
+                        <td><%= user.getUserId() %></td>
+                        <td><%= user.getUserName() %></td>
+                        <td><%= user.getEmail() %></td>
+                        <td><%= user.getRole() %></td>
                         <td>
                             <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i> Edit</button>
                             <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
                         </td>
                     </tr>
-                    <!-- More users can be dynamically added here -->
+
+                <%
+                    }
+                %>
                     </tbody>
                 </table>
+                    <%
+                    }
+                %>
+                <!-- User Table -->
+
+                    <!-- Sample user data; replace with dynamic data -->
+
+                    <!-- More users can be dynamically added here -->
+
             </div>
         </div>
     </div>
@@ -265,18 +283,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="updateUser" method="post">
+                    <div class="mb-3">
+                        <label for="editid" class="form-label">UserID</label>
+                        <input name="name" type="text" class="form-control" id="editid" value="john_doe" required>
+                    </div>
                     <div class="mb-3">
                         <label for="editUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="editUsername" value="john_doe" required>
+                        <input name="name" type="text" class="form-control" id="editUsername" value="john_doe" required>
                     </div>
                     <div class="mb-3">
                         <label for="editEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="editEmail" value="john@example.com" required>
+                        <input name="email" type="email" class="form-control" id="editEmail" value="john@example.com" required>
                     </div>
                     <div class="mb-3">
                         <label for="editRole" class="form-label">Role</label>
-                        <select class="form-select" id="editRole" required>
+                        <select class="form-select" id="editRole" name="role" required>
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
                         </select>

@@ -11,6 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "AddUserServlet", urlPatterns = "/addUser")
 
@@ -36,5 +38,19 @@ public class AddUserServlet extends HttpServlet {
         session.getTransaction().commit();
         session.close();
         resp.sendRedirect("userManagement.jsp");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<User> users = new ArrayList<>();
+        ServletContext context = req.getServletContext();
+        SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        users = session.createQuery("FROM User").list();
+        session.getTransaction().commit();
+        session.close();
+        req.setAttribute("users", users);
+        req.getRequestDispatcher("userManagement.jsp").forward(req, resp);
     }
 }
