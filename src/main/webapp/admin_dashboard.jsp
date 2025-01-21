@@ -143,7 +143,7 @@
                     <a class="nav-link" href="addUser">User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="categoryManagement.jsp">Category</a>
+                    <a class="nav-link" href="saveCategory">Category</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="productManagement.jsp">Product</a>

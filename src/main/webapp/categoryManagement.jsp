@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.example.ecommerrce_web.entity.Category" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: PC
   Date: 1/19/2025
@@ -167,6 +168,7 @@
 </section>
 
 <br><br>
+
 <section class="category-management-section py-5">
   <div class="container">
     <div class="row">
@@ -184,19 +186,35 @@
             <th>Actions</th>
           </tr>
           </thead>
-          <tbody>
-          <!-- Sample category data; replace with dynamic data -->
+
+          <%
+            List<Category> categories = (List<Category>) request.getAttribute("categories");
+            if (categories != null && !categories.isEmpty()) {
+                for (Category category : categories) {
+          %>
           <tr>
-            <td>1</td>
-            <td>Pet Food</td>
-            <td>All types of pet food products</td>
+            <td><%= category.getId() %></td>
+            <td><%= category.getName() %></td>
+            <td><%= category.getDescription() %></td>
             <td>
-              <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editCategoryModal"><i class="bi bi-pencil"></i> Edit</button>
-              <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+              <button class="btn btn-sm btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editCategoryModal"
+                      data-id="<%= category.getId() %>"
+                      data-name="<%= category.getName() %>"
+                      data-description="<%= category.getDescription() %>">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+              <button class="btn btn-sm btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteCategoryModal"
+                      data-id="<%= category.getId() %>">
+                <i class="bi bi-trash"></i> Delete
+              </button>
             </td>
           </tr>
-          <!-- More categories can be dynamically added here -->
-          </tbody>
+          <% } } %>
+
         </table>
       </div>
     </div>
@@ -212,14 +230,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="saveCategory" method="post">
           <div class="mb-3">
             <label for="categoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="categoryName" required>
+            <input name="name" type="text" class="form-control" id="categoryName" required>
           </div>
           <div class="mb-3">
             <label for="categoryDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
+            <textarea name="description" class="form-control" id="categoryDescription" rows="3"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Add Category</button>
         </form>
@@ -237,16 +255,44 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="updateCategory" method="post">
+          <div class="mb-3">
+            <label for="editCategoryId" class="form-label">Category Id</label>
+            <input name="id" type="text" class="form-control" id="editCategoryId"  required>
+          </div>
+
           <div class="mb-3">
             <label for="editCategoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="editCategoryName" value="Pet Food" required>
+            <input name="name" type="text" class="form-control" id="editCategoryName" required>
           </div>
           <div class="mb-3">
             <label for="editCategoryDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="editCategoryDescription" rows="3">All types of pet food products</textarea>
+            <textarea name="description" class="form-control" id="editCategoryDescription" rows="3">All types of pet food products</textarea>
           </div>
           <button type="submit" class="btn btn-success">Update Category</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteCategoryModalLabel">Confirm Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this category?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form id="deleteCategoryForm" action="deleteCategory" method="post">
+          <!-- Hidden input to store the category ID -->
+          <input type="hidden" id="deleteCategoryId" name="id">
+          <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>
     </div>
@@ -259,6 +305,58 @@
     <p class="mb-0">&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
   </div>
 </footer>
+
+<script>
+  // Get the edit modal element
+  const editCategoryModal = document.getElementById('editCategoryModal');
+
+  // Add event listener to the modal when it is about to be shown
+  editCategoryModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+
+    // Extract info from data-* attributes
+    const categoryId = button.getAttribute('data-id');
+    const categoryName = button.getAttribute('data-name');
+    const categoryDescription = button.getAttribute('data-description');
+
+    // Get the input fields in the modal
+    const editCategoryNameInput = document.getElementById('editCategoryName');
+    const editCategoryDescriptionInput = document.getElementById('editCategoryDescription');
+    const editCategoryIdInput = document.getElementById('editCategoryId'); // if you want to pass the ID
+
+    // Update the modal's fields with the selected category data
+    editCategoryIdInput.value = categoryId;
+    editCategoryNameInput.value = categoryName;
+    editCategoryDescriptionInput.value = categoryDescription;
+
+    // Optional: If you have a hidden field for category ID
+    if (editCategoryIdInput) {
+      editCategoryIdInput.value = categoryId;
+    }
+  });
+</script>
+
+<script>
+  // Get the delete modal element
+  const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+  // Add event listener to the modal when it is about to be shown
+  deleteCategoryModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+
+    // Extract category ID from data-id attribute
+    const categoryId = button.getAttribute('data-id');
+
+    // Get the hidden input field in the delete form
+    const deleteCategoryIdInput = document.getElementById('deleteCategoryId');
+
+    // Set the category ID in the hidden input field
+    deleteCategoryIdInput.value = categoryId;
+  });
+</script>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

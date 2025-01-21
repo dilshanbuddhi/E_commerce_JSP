@@ -22,5 +22,6 @@
 
 
     <mapping class="org.example.ecommerrce_web.entity.User"/>
+    <mapping class="org.example.ecommerrce_web.entity.Category"/>
   </session-factory>
 </hibernate-configuration>

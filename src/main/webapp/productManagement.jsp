@@ -18,6 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
     <style>
         body {
             font-family: 'Baloo 2', cursive;
@@ -113,6 +114,7 @@
             margin-bottom: 20px;
         }
     </style>
+
 </head>
 <body>
 
