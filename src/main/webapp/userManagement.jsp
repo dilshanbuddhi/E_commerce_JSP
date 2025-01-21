@@ -181,6 +181,7 @@
     </div>
 </section>
 <br><br>
+
 <section class="user-management-section py-5">
     <div class="container">
         <div class="row">
@@ -221,10 +222,13 @@
                                     data-role="<%= user.getRole() %>">
                                 <i class="bi bi-pencil"></i> Edit
                             </button>
-
-                            <button class="btn btn-sm btn-danger">
+                            <button id="delete-btn" class="btn btn-sm btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteUserModal"
+                                    data-id="<%= user.getUserId() %>">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
+
                         </td>
                     </tr>
                     <%
@@ -317,6 +321,28 @@
     </div>
 </div>
 
+<!-- Delete User Confirmation Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteUserForm" action="deleteUser" method="post">
+                    <input type="hidden" name="id" id="deleteUserId">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">
@@ -329,7 +355,7 @@
 
 <script>
     // jQuery event listener for edit button click
-    $(document).on('click', '#edit-btn', function() {
+    $(document).on('click', '#edit-btn', function () {
         // Get user data from the data attributes of the clicked button
         var userId = $(this).data('id');
         var username = $(this).data('username');
@@ -342,6 +368,26 @@
         $('#editEmail').val(email);
         $('#editRole').val(role);
     });
+
+
+        // Get the delete modal element
+        const deleteUserModal = document.getElementById('deleteUserModal');
+
+        // Add an event listener to the modal when it is about to be shown
+        deleteUserModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+
+        // Extract user ID from data-* attribute
+        const userId = button.getAttribute('data-id');
+
+        // Get the delete modal hidden input
+        const deleteUserIdInput = document.getElementById('deleteUserId');
+
+        // Set the hidden input value with the user ID
+        deleteUserIdInput.value = userId;
+    });
+
 </script>
 
 <!-- Bootstrap JS -->
