@@ -41,11 +41,11 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("index.jsp");
                 }
             } else {
-                response.sendRedirect("index.jsp?error=failed");
+                response.sendRedirect("registration.jsp?loginError=failed");
             }
 
         } catch (Exception e) {
-             response.sendRedirect("index.jsp?error=failed");
+             response.sendRedirect("index.jsp?loginError=failed");
             e.printStackTrace();
         }
     }

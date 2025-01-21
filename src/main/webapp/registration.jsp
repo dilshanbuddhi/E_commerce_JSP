@@ -102,6 +102,7 @@
     </style>
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Header / Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -197,6 +198,23 @@
         </div>
     </div>
 
+    <%
+        String message =  request.getParameter("loginError");
+        if (message != null) {
+            System.out.println(message);
+    %>
+
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Login Failed!",
+        });
+    </script>
+    <%
+        }
+    %>
+
     <!-- Register Form -->
     <div id="regForm">
         <div id="registerForm" style="display: none;"> <!-- Initially hidden -->
@@ -241,6 +259,7 @@
         <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     // Get references to the forms and links
@@ -279,7 +298,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-+
