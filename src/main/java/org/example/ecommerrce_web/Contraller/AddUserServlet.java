@@ -68,9 +68,9 @@ public class AddUserServlet extends HttpServlet {
             while (resultSet.next()) {
                 User user = new User();
                 user.setUserId(resultSet.getLong(1)); // Assuming `id` column exists in the database
-                user.setUserName(resultSet.getString(5));
+                user.setUserName(resultSet.getString(4));
                 user.setEmail(resultSet.getString(2));
-                user.setRole(resultSet.getString(4));
+                user.setRole(resultSet.getString(5));
                 users.add(user);
             }
             req.setAttribute("users", users);

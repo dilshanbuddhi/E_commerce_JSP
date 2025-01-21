@@ -212,9 +212,16 @@
                         <td><%= user.getEmail() %></td>
                         <td><%= user.getRole() %></td>
                         <td>
-                            <button id="edit-btn" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <button id="edit-btn" class="btn btn-sm btn-success"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editUserModal"
+                                    data-id="<%= user.getUserId() %>"
+                                    data-username="<%= user.getUserName() %>"
+                                    data-email="<%= user.getEmail() %>"
+                                    data-role="<%= user.getRole() %>">
                                 <i class="bi bi-pencil"></i> Edit
                             </button>
+
                             <button class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
@@ -286,7 +293,7 @@
                 <form action="updateUser" method="post">
                     <div class="mb-3">
                         <label for="editid" class="form-label">UserID</label>
-                        <input name="name" type="text" class="form-control" id="editid" required>
+                        <input name="id" type="text" class="form-control" id="editid" required>
                     </div>
                     <div class="mb-3">
                         <label for="editUsername" class="form-label">Username</label>
@@ -321,26 +328,19 @@
 <script src="JQ/jquery-3.7.1.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // When the edit button is clicked
-        $('#edit-btn').on('click', function () {
-            console.log("clicked");
-            // Get the values from the table row
-            var row = $(this).closest('tr'); // Find the row where the button was clicked
-            var userId = row.find('.user-id').text();
-            var username = row.find('.username').text();
-            var email = row.find('.email').text();
-            var role = row.find('.role').text();
+    // jQuery event listener for edit button click
+    $(document).on('click', '#edit-btn', function() {
+        // Get user data from the data attributes of the clicked button
+        var userId = $(this).data('id');
+        var username = $(this).data('username');
+        var email = $(this).data('email');
+        var role = $(this).data('role');
 
-            // Set the values to the modal input fields
-            $('#editid').val(userId);
-            $('#editUsername').val(username);
-            $('#editEmail').val(email);
-            $('#editRole').val(role);
-
-            // Open the modal
-            $('#editUserModal').modal('show');
-        });
+        // Set the form fields with the user data
+        $('#editid').val(userId);
+        $('#editUsername').val(username);
+        $('#editEmail').val(email);
+        $('#editRole').val(role);
     });
 </script>
 
