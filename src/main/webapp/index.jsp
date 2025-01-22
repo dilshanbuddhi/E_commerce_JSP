@@ -137,6 +137,7 @@
 <%
     String userId = request.getParameter("userId");
     System.out.println(userId+" :User ID");
+    boolean isLoggedIn = (userId != null);
     if (userId != null) {
 %>
         <script>
@@ -187,7 +188,7 @@
             <div class="card-body">
                 <h5 class="card-title">Dog Clothes</h5>
                 <p class="card-text">Description id here ..............................</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
+                <a href="#" onclick="isloggin()" class="btn btn-primary">Add To Cart</a>
             </div>
         </div>
         <div class="card" style="width: 12rem;">
@@ -233,6 +234,18 @@
         <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
     </div>
 </footer>
+
+<script>
+    function isloggin() {
+        var loginLink = <%=isLoggedIn%>
+        if (loginLink) {
+            console.log("add to cart");
+        }else {
+            console.log('logging first')
+            alert('Please login first');
+        }
+    }
+</script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
