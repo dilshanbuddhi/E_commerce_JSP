@@ -35,17 +35,17 @@ public class LoginServlet extends HttpServlet {
             session.getTransaction().commit();
 
             if (user != null) {
-                if (user.getRole().equals("admin")){
-                    response.sendRedirect("admin_dashboard.jsp");
+                if (user.getRole().equals("Admin")){
+                    response.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
                 }else {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("index.jsp?userId=" + user.getUserId());
                 }
             } else {
-                response.sendRedirect("registration.jsp?loginError=failed");
+                response.sendRedirect("index.jsp?loginError=failed");
             }
 
         } catch (Exception e) {
-             response.sendRedirect("index.jsp?loginError=failed");
+             response.sendRedirect("testsinglepage.jsp?loginError=failed");
             e.printStackTrace();
         }
     }

@@ -80,9 +80,10 @@
             padding:20px;
         }
         #cardset{
-            padding-left:120px;
-            padding-right:120px;
+            padding-left:50px;
+            padding-right:50px;
             display: flex;
+            justify-content: center;
             flex-direction: row;
             flex-wrap: wrap;
         }
@@ -121,7 +122,10 @@
                 </li>
             </ul>
             <div class="d-flex align-items-center">
-                <a href="registration.jsp" class="nav-link"><i class="bi bi-person"></i></a>
+                <a href="#" id="profileLink" class="nav-link"><i class="bi bi-person"></i></a>
+                <a href="registration.jsp" id="loginLink" class="nav-link">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                </a>
                 <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
                 <a href="#" class="nav-link position-relative">
                     <i class="bi bi-cart"></i></a>
@@ -130,8 +134,24 @@
     </div>
 </nav>
 
+<%
+    String userId = request.getParameter("userId");
+    System.out.println(userId+" :User ID");
+    if (userId != null) {
+%>
+        <script>
+            var loginLink = document.getElementById("loginLink");
+            loginLink.style.display = "none";
+            var profileLink = document.getElementById("profileLink");
+            profileLink.style.display = "block";
+        </script>
+<%
+    }
+%>
+
 
 <a href="admin_dashboard.jsp">admin dashboard</a>
+<a href="testsinglepage.jsp">test dashboard</a>
 <!-- Search Bar -->
 <div class="container my-4">
     <div class="input-group">

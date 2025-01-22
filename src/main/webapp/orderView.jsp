@@ -132,7 +132,7 @@
             </ul>
             <div class="d-flex align-items-center">
                 <!-- Logout Icon -->
-                <a href="#" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
+                <a href="#"id="logoutLink" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
     </div>

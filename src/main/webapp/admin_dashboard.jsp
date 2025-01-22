@@ -154,7 +154,7 @@
             </ul>
             <div class="d-flex align-items-center">
                 <!-- Logout Icon -->
-                <a href="#" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
+                <a href="#" id="logoutLink" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -222,6 +222,7 @@
         <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     document.getElementById("logoutLink").addEventListener("click", function(event) {

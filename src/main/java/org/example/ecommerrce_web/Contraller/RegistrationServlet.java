@@ -36,11 +36,11 @@ public class RegistrationServlet extends HttpServlet {
             session.save(user);
             session.getTransaction().commit();
             session.close();
-            resp.sendRedirect("admin_dashboard.jsp");
+            resp.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
 
 
         }else {
-            resp.sendRedirect("registration.jsp?errorpassword=failed");
+            resp.sendRedirect("index.jsp?errorpassword=failed");
         }
     }
 }
