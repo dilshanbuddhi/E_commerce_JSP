@@ -27,18 +27,17 @@ public class saveProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String price = req.getParameter("price");
+        String description = req.getParameter("description");
         long categoryId = Long.parseLong(req.getParameter("categoryId"));
         String quantity = req.getParameter("quantity");
 
-        // File handling
         Part filePart = req.getPart("productImage"); // Retrieves <input type="file" name="productImage">
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Get the file name
 
-        // Get the real path to the "uploads" folder and create the folder if it doesn't exist
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
-            uploadDir.mkdir(); // Create the directory if it doesn't exist
+            uploadDir.mkdir();
         }
 
         // Save the file to the uploads directory
@@ -53,6 +52,7 @@ public class saveProductServlet extends HttpServlet {
         // Create and save the product
         Product product = new Product();
         product.setName(name);
+        product.setDescription(description);
         product.setPrice(Double.parseDouble(price));
         product.setCategory(session.get(Category.class, categoryId));
         product.setQuantity(Integer.parseInt(quantity));

@@ -1,3 +1,5 @@
+<%@ page import="org.example.ecommerrce_web.entity.Product" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,6 +185,27 @@
 <Section id="cardSec">
     <h1>Pet Clothes</h1>
     <div id="cardset">
+
+        <%
+            List<Product> products = (List<Product>)request.getAttribute("products");
+            if (products != null) {
+                for (Product product : products) {
+
+        %>
+        <div>
+            <div class="card" style="width: 12rem;">
+                <img src="images/item1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><%= product.getQuantity()%></h5>
+                    <p class="card-text">Description id here ..............................</p>
+        </div>
+        <%
+            }
+        %>
+
+                <%
+            }
+        %>
         <div class="card" style="width: 12rem;">
             <img src="images/item1.jpg" class="card-img-top" alt="...">
             <div class="card-body">

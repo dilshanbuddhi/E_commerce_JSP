@@ -20,6 +20,7 @@ public class editProductServlet extends HttpServlet {
         String id = req.getParameter("id");
         String name = req.getParameter("name");
         String cid = req.getParameter("categoryId");
+        String description = req.getParameter("description");
         String quantity = req.getParameter("quantity");
         String price = req.getParameter("price");
 
@@ -29,6 +30,7 @@ public class editProductServlet extends HttpServlet {
         session.beginTransaction();
         Product product = session.get(Product.class, Long.parseLong(id));
         product.setName(name);
+        product.setDescription(description);
         product.setCategory(session.get(Category.class, Long.parseLong(cid)));
         product.setQuantity(Integer.parseInt(quantity));
         product.setPrice(Double.parseDouble(price));

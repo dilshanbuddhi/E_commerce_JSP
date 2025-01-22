@@ -186,6 +186,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Description</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Quantity</th>
@@ -204,6 +205,7 @@
                     <tr>
                         <td><%= product.getId() %></td>
                         <td><%= product.getName() %></td>
+                        <td><%= product.getDescription()%></td>
                         <td><%= product.getCategory().getName() %></td>
                         <td><%= product.getPrice() %></td>
                         <td><%= product.getQuantity() %></td>
@@ -215,7 +217,8 @@
                                     data-id="<%= product.getId() %>"
                                     data-name="<%= product.getName() %>"
                                     data-price="<%=product.getPrice()%>"
-                                    data-qty="<%=product.getQuantity()%>">
+                                    data-qty="<%=product.getQuantity()%>"
+                                    data-description="<%=product.getDescription()%>">
 
                                 <i class="bi bi-pencil"></i> Edit
                             </button>
@@ -259,6 +262,10 @@
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product Name</label>
                         <input name="name" type="text" class="form-control" id="productName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productDes" class="form-label">Product Name</label>
+                        <input name="description" type="text" class="form-control" id="productDes" required>
                     </div>
                     <div class="mb-3">
                         <label for="productImage" class="form-label">Product Image</label>
@@ -314,6 +321,10 @@
                     <div class="mb-3">
                         <label for="editProductName" class="form-label">Product Name</label>
                         <input name="name" type="text" class="form-control" id="editProductName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editProductDescription" class="form-label">Product Description</label>
+                        <input name="description" type="text" class="form-control" id="editProductDescription" required>
                     </div>
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Category</label>
@@ -427,8 +438,10 @@ delete product
             var editProductNameInput = document.getElementById("editProductName");
             var editProductPriceInput = document.getElementById("editProductPrice");
             var editProductQuantityInput = document.getElementById("editProductQuantity");
+            var editProductDescriptionInput = document.getElementById("editProductDescription");
 
             // Set the input fields with the corresponding data
+            editProductDescriptionInput.value = button.getAttribute("data-description");
             editProductIdInput.value = productId;
             editProductNameInput.value = productName;
             editProductPriceInput.value = productPrice;
