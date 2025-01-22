@@ -36,16 +36,16 @@ public class LoginServlet extends HttpServlet {
 
             if (user != null) {
                 if (user.getRole().equals("Admin")){
-                    response.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
+                    response.sendRedirect("getAllProduct?userId=" + user.getUserId());
                 }else {
-                    response.sendRedirect("index.jsp?userId=" + user.getUserId());
+                    response.sendRedirect("getAllProduct?userId=" + user.getUserId());
                 }
             } else {
-                response.sendRedirect("index.jsp?loginError=failed");
+                response.sendRedirect("getAllProduct?loginError=failed");
             }
 
         } catch (Exception e) {
-             response.sendRedirect("testsinglepage.jsp?loginError=failed");
+             response.sendRedirect("getAllProduct?loginError=failed");
             e.printStackTrace();
         }
     }

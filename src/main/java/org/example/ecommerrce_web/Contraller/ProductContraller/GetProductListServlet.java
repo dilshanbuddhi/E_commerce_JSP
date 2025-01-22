@@ -30,6 +30,7 @@ public class GetProductListServlet extends HttpServlet {
         session.getTransaction().commit();
         session.close();
         req.setAttribute("products", products);
-        req.getRequestDispatcher("getAllCategory").forward(req, resp);
+        System.out.println("1");
+        req.getRequestDispatcher("getCategoryList").forward(req, resp);
     }
 }

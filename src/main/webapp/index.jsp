@@ -1,5 +1,6 @@
 <%@ page import="org.example.ecommerrce_web.entity.Product" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.example.ecommerrce_web.entity.Category" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,12 +13,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
         /* Applying the playful Baloo 2 font to key sections */
         body {
-            font-family: 'Baloo 2', cursive;
+            font-family: 'Baloo 2', cursive !important;
         }
 
         .py-5 {
@@ -40,6 +43,8 @@
         }
 
         .hero-section img {
+            margin-left: 30%;
+            margin-top: 54px;
             max-width: 100%;
         }
 
@@ -92,9 +97,97 @@
         #cardSec h1{
             margin-left: 100px;
         }
-        .card{
-            margin:30px;
+
+        #cardset {
+            padding-left: 50px;
+            padding-right: 50px;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
+
+        .card {
+            margin: 30px;
+            width: 14rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            font-family: 'Baloo 2', cursive !important;
+        }
+
+        .card h5 {
+            font-size: 2.2rem;
+            color: #333;
+            font-family: 'Baloo 2', cursive !important;
+        }
+
+        .card-price {
+            color: #c2973b;
+            font-size: 1.4rem;
+            font-family: 'Baloo 2', cursive !important;
+        }
+
+        .btn-add-cart {
+            width: 50%;
+            padding: 10px 0;
+            font-weight: lighter;
+            border-radius: 5px;
+            border: 2px solid #333;
+            background-color: transparent;
+            color: #333;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-add-cart:hover {
+            background-color: #e58f48; /* Orange color on hover */
+            color: #fff; /* White text on hover */
+            border-color: #592e0f; /* Border changes to match the button color */
+            transform: scale(1.2);
+        }
+
+
+        .btn-heart {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333;
+            background-color: transparent;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Heart Icon Default Style */
+        .btn-heart i {
+            color: #554e57; /* Initial heart color */
+            font-size: 2.4rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        /* Hover Effects */
+        .btn-heart:hover {
+            border-color: #ffffff;
+            background-color: #d6aaec; /* Orange background on hover */
+            transform: scale(1.2); /* Scale button up on hover */
+        }
+
+        .btn-heart:hover i {
+            color: #f108e6; /* Change heart color to white on hover */
+            transform: scale(1.2); /* Slightly scale up the heart icon */
+        }
+        .categoryName{
+            font-size: 75px;
+            background: #dc5b22;
+            background: -webkit-linear-gradient(to right, #f0ad4e, #dc5b22);
+            background: linear-gradient(to right, #f0ad4e, #dc5b22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
     </style>
 </head>
 <body>
@@ -111,7 +204,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.jsp">Home</a>
+                    <a class="nav-link" href="getAllProduct">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Shop</a>
@@ -183,74 +276,46 @@
 </section>
 
 <Section id="cardSec">
-    <h1>Pet Clothes</h1>
+    <h1 class="categoryName">Pet Clothes</h1>
     <div id="cardset">
 
         <%
+            List<Category> categories = (List<Category>)request.getAttribute("categories");
             List<Product> products = (List<Product>)request.getAttribute("products");
             if (products != null) {
                 for (Product product : products) {
-
         %>
-        <div>
-            <div class="card" style="width: 12rem;">
-                <img src="images/item1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><%= product.getQuantity()%></h5>
-                    <p class="card-text">Description id here ..............................</p>
+
+        <div class="card" style="width: 15rem; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px;">
+            <!-- Product Image -->
+            <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="border-radius: 15px; height: 180px; object-fit: cover; margin-bottom: 15px;">
+
+            <!-- Product Title -->
+            <h5 class="card-title" style="font-size: 2.2rem; color: #333;"><%= product.getName() %></h5>
+            <h5 class="card-title" style="font-size: 1.0rem; color: #333;"><%= product.getDescription() %></h5>
+
+            <!-- Product Price -->
+            <p class="card-price" style="color: #c4874a; font-size: 1.4rem;">$<%= product.getPrice() %></p>
+
+            <!-- Add to Cart Button -->
+            <div style="display: flex; justify-content: space-between;">
+                <button class="btn btn-add-cart" onclick="isloggin()">Add to Cart</button>
+                <button class="btn-heart">
+                    <i class="bi bi-heart"></i>
+                </button>
+            </div>
         </div>
+
         <%
             }
         %>
-
-                <%
+            <%
             }
-        %>
-        <div class="card" style="width: 12rem;">
-            <img src="images/item1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Dog Clothes</h5>
-                <p class="card-text">Description id here ..............................</p>
-                <a href="#" onclick="isloggin()" class="btn btn-primary">Add To Cart</a>
-            </div>
-        </div>
-        <div class="card" style="width: 12rem;">
-            <img src="images/item1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Dog Clothes</h5>
-                <p class="card-text">Description id here ..............................</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
-            </div>
-        </div>
-        <div class="card" style="width: 12rem;">
-            <img src="images/item1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Dog Clothes</h5>
-                <p class="card-text">Description id here ..............................</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
-            </div>
-        </div>
-        <div class="card" style="width: 12rem;">
-            <img src="images/item1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Dog Clothes</h5>
-                <p class="card-text">Description id here ..............................</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
-            </div>
-        </div>
-        <div class="card" style="width: 12rem;">
-            <img src="images/item1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Dog Clothes</h5>
-                <p class="card-text">Description id here ..............................</p>
-                <a href="#" class="btn btn-primary">Add To Cart</a>
-            </div>
-        </div>
+            %>
+
     </div>
 
-
 </Section>
-
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">
