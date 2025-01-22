@@ -1,4 +1,4 @@
-package org.example.ecommerrce_web.Contraller;
+package org.example.ecommerrce_web.Contraller.UserContraller;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;

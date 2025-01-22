@@ -137,7 +137,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_dashboard.jsp">Home</a>
+                    <a class="nav-link active" href="admin_dashboard.jsp">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="addUser">User</a>
@@ -146,7 +146,7 @@
                     <a class="nav-link" href="saveCategory">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="productManagement.jsp">Product</a>
+                    <a class="nav-link" href="getProductList">Product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="orderView.jsp">Order</a>
@@ -223,7 +223,29 @@
     </div>
 </footer>
 
+<script>
+    document.getElementById("logoutLink").addEventListener("click", function(event) {
+        // Prevent the default link behavior
+        event.preventDefault();
 
+        // Use SweetAlert2 for confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!'
+        }).then((result) => {
+            // If the user confirms, redirect to index.jsp
+            if (result.isConfirmed) {
+                // Redirect after showing success message
+                window.location.href = "index.jsp";
+            }
+        });
+    });
+</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

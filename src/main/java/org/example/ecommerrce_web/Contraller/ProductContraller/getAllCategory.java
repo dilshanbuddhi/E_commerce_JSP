@@ -1,4 +1,4 @@
-package org.example.ecommerrce_web.Contraller;
+package org.example.ecommerrce_web.Contraller.ProductContraller;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -14,26 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "saveCategoryServlet", value = "/saveCategory")
-public class SaveCategoryServlet extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String description = req.getParameter("description");
-
-        ServletContext context = req.getServletContext();
-        SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Category category = new Category();
-        category.setName(name);
-        category.setDescription(description);
-        session.save(category);
-        session.getTransaction().commit();
-        session.close();
-        resp.sendRedirect("saveCategory");
-    }
-
+@WebServlet(name = "getAllCategory", value = "/getAllCategory")
+public class getAllCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Category> categories = new ArrayList<>();
@@ -46,6 +28,6 @@ public class SaveCategoryServlet extends HttpServlet {
         session.getTransaction().commit();
         session.close();
         req.setAttribute("categories", categories);
-        req.getRequestDispatcher("categoryManagement.jsp").forward(req, resp);
+        req.getRequestDispatcher("productManagement.jsp").forward(req, resp);
     }
 }

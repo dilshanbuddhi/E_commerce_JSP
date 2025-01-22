@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
   <style>
@@ -130,22 +132,23 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="admin_dashboard.jsp"Home</a>
+          <a class="nav-link" href="admin_dashboard.jsp">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="userManagement.jsp">User</a>
+          <a class="nav-link" href="addUser">User</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="categoryManagement.jsp">Category</a>
+          <a class="nav-link active" href="saveCategory">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="productManagement.jsp">Product</a>
+          <a class="nav-link" href="getProductList">Product</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="orderView.jsp">Order</a>
         </li>
       </ul>
       <div class="d-flex align-items-center">
+        <!-- Logout Icon -->
         <a href="#" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
       </div>
     </div>
@@ -305,6 +308,7 @@
     <p class="mb-0">&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
   // Get the edit modal element
@@ -337,6 +341,29 @@
   });
 </script>
 
+<script>
+  document.getElementById("logoutLink").addEventListener("click", function(event) {
+    // Prevent the default link behavior
+    event.preventDefault();
+
+    // Use SweetAlert2 for confirmation
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!'
+    }).then((result) => {
+      // If the user confirms, redirect to index.jsp
+      if (result.isConfirmed) {
+        // Redirect after showing success message
+        window.location.href = "index.jsp";
+      }
+    });
+  });
+</script>
 <script>
   // Get the delete modal element
   const deleteCategoryModal = document.getElementById('deleteCategoryModal');

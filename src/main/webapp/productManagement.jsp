@@ -1,4 +1,6 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.example.ecommerrce_web.entity.Category" %>
+<%@ page import="org.example.ecommerrce_web.entity.Product" %><%--
   Created by IntelliJ IDEA.
   User: PC
   Date: 1/19/2025
@@ -16,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 
@@ -133,20 +137,21 @@
                     <a class="nav-link" href="admin_dashboard.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="userManagement.jsp">User</a>
+                    <a class="nav-link" href="addUser">User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="categoryManagement.jsp">Category</a>
+                    <a class="nav-link" href="saveCategory">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="productManagement.jsp">Product</a>
+                    <a class="nav-link active" href="getProductList">Product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="orderView.jsp">Order</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
-                <a href="index.jsp" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
+                <!-- Logout Icon -->
+                <a href="#" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -184,23 +189,56 @@
                         <th>Category</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Sample product data; replace with dynamic data -->
+
+                    <%
+                        List<Product> products = (List<Product>) request.getAttribute("products");
+                        if (products != null && !products.isEmpty()) {
+                            for (Product product : products) {
+
+                    %>
                     <tr>
-                        <td>1</td>
-                        <td>Dog Food</td>
-                        <td>Pet Food</td>
-                        <td>$20.00</td>
-                        <td>100</td>
+                        <td><%= product.getId() %></td>
+                        <td><%= product.getName() %></td>
+                        <td><%= product.getCategory().getName() %></td>
+                        <td><%= product.getPrice() %></td>
+                        <td><%= product.getQuantity() %></td>
+                        <td><img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" width="100"></td>
                         <td>
-                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
-                        </td>
+                            <button class="btn btn-sm btn-success"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editProductModal"
+                                    data-id="<%= product.getId() %>"
+                                    data-name="<%= product.getName() %>"
+                                    data-price="<%=product.getPrice()%>"
+                                    data-qty="<%=product.getQuantity()%>">
+
+                                <i class="bi bi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteProductModal"
+                                    data-id="<%= product.getId() %>">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>                        </td>
                     </tr>
-                    <!-- More products can be dynamically added here -->
+                    <%
+                        }
+                    %>
+                    <%
+                        }else {
+                    %>
+                    <tr>
+                        <td colspan="6">No products found.</td>
+                    </tr>
+                    <%
+                        }
+                    %>
+
                     </tbody>
                 </table>
             </div>
@@ -217,28 +255,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="saveProduct" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName" required>
+                        <input name="name" type="text" class="form-control" id="productName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">Product Image</label>
+                        <input  type="file" class="form-control" id="productImage" name="productImage" accept="image/*" required>
                     </div>
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Category</label>
-                        <select class="form-select" id="productCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="1">Pet Food</option>
+                        <select name="categoryId" class="form-select" id="productCategory" required>
+                            <%
+                                List<Category> categorie = (List<Category>) request.getAttribute("categories");
+                                if (categorie != null && !categorie.isEmpty()) {
+                                    for (Category category : categorie) {
+                                        System.out.println(categorie+" "+category.getName());
+                                    %>
+                                    <option value="<%= category.getId() %>"><%= category.getName() %></option>
+
+                            <%
+                                }
+                            }
+                            %>
                             <!-- Add more categories dynamically -->
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="productPrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
+                        <input name="price" type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
                     </div>
                     <div class="mb-3">
                         <label for="productQuantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="productQuantity" min="1" required>
+                        <input name="quantity" type="number" class="form-control" id="productQuantity" min="1" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <button type="submit" class="btn btn-primary" >Add Product</button>
                 </form>
             </div>
         </div>
@@ -254,26 +306,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="editProduct" method="post">
                     <div class="mb-3">
-                        <label for="editProductName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="editProductName" required>
+                        <label for="editProductId" class="form-label">Product ID</label>
+                        <input name="id" type="text" class="form-control" id="editProductId" required>
                     </div>
                     <div class="mb-3">
-                        <label for="editProductCategory" class="form-label">Category</label>
-                        <select class="form-select" id="editProductCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="1">Pet Food</option>
+                        <label for="editProductName" class="form-label">Product Name</label>
+                        <input name="name" type="text" class="form-control" id="editProductName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">Category</label>
+                        <select name="categoryId" class="form-select" id="category" required>
+                            <%
+                                List<Category> categories = (List<Category>) request.getAttribute("categories");
+                                if (categorie != null && !categorie.isEmpty()) {
+                                    for (Category category : categories) {
+                            %>
+                            <option value="<%= category.getId() %>"><%= category.getName() %></option>
+
+                            <%
+                                    }
+                                }
+                            %>
                             <!-- Add more categories dynamically -->
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="editProductPrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="editProductPrice" min="0" step="0.01" required>
+                        <input name="price" type="number" class="form-control" id="editProductPrice" min="0" step="0.01" required>
                     </div>
                     <div class="mb-3">
                         <label for="editProductQuantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="editProductQuantity" min="1" required>
+                        <input name="quantity" type="number" class="form-control" id="editProductQuantity" min="1" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Product</button>
                 </form>
@@ -282,12 +347,117 @@
     </div>
 </div>
 
+<%--
+delete product
+--%>
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteProductModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteProductForm" action="deleteProduct" method="post">
+                    <!-- Hidden input to store the category ID -->
+                    <input type="hidden" id="deleteProductId" name="id">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">
         <p class="mb-0">&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
     </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.getElementById("logoutLink").addEventListener("click", function(event) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Use SweetAlert2 for confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!'
+        }).then((result) => {
+            // If the user confirms, redirect to index.jsp
+            if (result.isConfirmed) {
+                // Redirect after showing success message
+                window.location.href = "index.jsp";
+            }
+        });
+    });
+</script>
+<script>
+    // Wait for the DOM to load completely
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the modal element
+        var editProductModal = document.getElementById("editProductModal");
+
+        // Listen for when the modal is about to be shown
+        editProductModal.addEventListener("show.bs.modal", function (event) {
+            // Get the button that triggered the modal
+            var button = event.relatedTarget;
+
+            // Extract the data attributes from the button
+            var productId = button.getAttribute("data-id");
+            var productName = button.getAttribute("data-name");
+            var productPrice = button.getAttribute("data-price");
+            var productQuantity = button.getAttribute("data-qty");
+
+            // Get the input fields inside the modal
+            var editProductIdInput = document.getElementById("editProductId")
+            var editProductNameInput = document.getElementById("editProductName");
+            var editProductPriceInput = document.getElementById("editProductPrice");
+            var editProductQuantityInput = document.getElementById("editProductQuantity");
+
+            // Set the input fields with the corresponding data
+            editProductIdInput.value = productId;
+            editProductNameInput.value = productName;
+            editProductPriceInput.value = productPrice;
+            editProductQuantityInput.value = productQuantity;
+        });
+    });
+
+</script>
+
+<script>
+    // Get the delete modal element
+    const deleteProductModal = document.getElementById('deleteProductModal');
+
+    // Add event listener to the modal when it is about to be shown
+    deleteProductModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+
+        // Extract category ID from data-id attribute
+        const ProductId = button.getAttribute('data-id');
+
+        // Get the hidden input field in the delete form
+        const deleteProductIdInput = document.getElementById('deleteProductId');
+
+        // Set the category ID in the hidden input field
+        deleteProductIdInput.value = ProductId;
+    });
+</script>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
