@@ -29,6 +29,6 @@ public class getAllProductServlet extends HttpServlet {
         session.getTransaction().commit();
         session.close();
         req.setAttribute("products", products);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("getAllCategoryForCustomer").forward(req, resp);
     }
 }

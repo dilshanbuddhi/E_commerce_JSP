@@ -18,7 +18,6 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
-        /* Applying the playful Baloo 2 font to key sections */
         body {
             font-family: 'Baloo 2', cursive !important;
         }
@@ -115,6 +114,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             font-family: 'Baloo 2', cursive !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .card h5 {
@@ -179,14 +185,11 @@
             color: #f108e6; /* Change heart color to white on hover */
             transform: scale(1.2); /* Slightly scale up the heart icon */
         }
-        .categoryName{
+        .categoryName {
             font-size: 75px;
-            background: #dc5b22;
-            background: -webkit-linear-gradient(to right, #f0ad4e, #dc5b22);
-            background: linear-gradient(to right, #f0ad4e, #dc5b22);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+            color: #443e30;
+            border-radius: 30px;
+            background: linear-gradient(90deg, rgba(244,225,176,1) 0%, rgba(255,225,198,1) 35%, rgba(252,245,238,1) 62%, rgba(255,255,255,1) 100%);        }
 
     </style>
 </head>
@@ -276,28 +279,32 @@
 </section>
 
 <Section id="cardSec">
-    <h1 class="categoryName">Pet Clothes</h1>
-    <div id="cardset">
+    <div id="cardset" class="row g-4">
+        <%
+            List<Category> categories = (List<Category>) request.getAttribute("categories");
+            List<Product> products = (List<Product>) request.getAttribute("products");
+
+            if (categories != null) {
+                for (Category category : categories) {
+        %>
+
+        <!-- Category Name -->
+        <h1 class="categoryName  mb-4"><%= category.getName() %></h1>
 
         <%
-            List<Category> categories = (List<Category>)request.getAttribute("categories");
-            List<Product> products = (List<Product>)request.getAttribute("products");
             if (products != null) {
                 for (Product product : products) {
+                    if (product.getCategory().getId() == category.getId()) {
         %>
 
         <div class="card" style="width: 15rem; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px;">
-            <!-- Product Image -->
             <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="border-radius: 15px; height: 180px; object-fit: cover; margin-bottom: 15px;">
 
-            <!-- Product Title -->
             <h5 class="card-title" style="font-size: 2.2rem; color: #333;"><%= product.getName() %></h5>
             <h5 class="card-title" style="font-size: 1.0rem; color: #333;"><%= product.getDescription() %></h5>
 
-            <!-- Product Price -->
-            <p class="card-price" style="color: #c4874a; font-size: 1.4rem;">$<%= product.getPrice() %></p>
+            <p class="card-price" style="color: #c4874a; font-size: 1.4rem;">Rs <%= product.getPrice() %>/=</p>
 
-            <!-- Add to Cart Button -->
             <div style="display: flex; justify-content: space-between;">
                 <button class="btn btn-add-cart" onclick="isloggin()">Add to Cart</button>
                 <button class="btn-heart">
@@ -305,17 +312,20 @@
                 </button>
             </div>
         </div>
-
         <%
+                    }
+                }
             }
         %>
-            <%
+
+        <%
+                }
             }
-            %>
-
+        %>
     </div>
-
 </Section>
+
+
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">

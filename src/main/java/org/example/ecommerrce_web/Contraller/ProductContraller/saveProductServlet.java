@@ -31,8 +31,8 @@ public class saveProductServlet extends HttpServlet {
         long categoryId = Long.parseLong(req.getParameter("categoryId"));
         String quantity = req.getParameter("quantity");
 
-        Part filePart = req.getPart("productImage"); // Retrieves <input type="file" name="productImage">
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Get the file name
+        Part filePart = req.getPart("productImage");
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
         File uploadDir = new File(uploadPath);
@@ -40,16 +40,14 @@ public class saveProductServlet extends HttpServlet {
             uploadDir.mkdir();
         }
 
-        // Save the file to the uploads directory
+
         filePart.write(uploadPath + File.separator + fileName);
 
-        // Hibernate session to save product
         ServletContext context = req.getServletContext();
         SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        // Create and save the product
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
@@ -62,7 +60,6 @@ public class saveProductServlet extends HttpServlet {
         session.getTransaction().commit();
         session.close();
 
-        // Redirect to product list page
         resp.sendRedirect("getProductList");
     }
     private Category getCobj(long category) {
