@@ -264,7 +264,7 @@
                         <input name="name" type="text" class="form-control" id="productName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productDes" class="form-label">Product Name</label>
+                        <label for="productDes" class="form-label">Product Description</label>
                         <input name="description" type="text" class="form-control" id="productDes" required>
                     </div>
                     <div class="mb-3">
@@ -299,6 +299,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary" >Add Product</button>
                 </form>
+
             </div>
         </div>
     </div>

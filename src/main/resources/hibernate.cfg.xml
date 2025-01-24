@@ -24,5 +24,6 @@
     <mapping class="org.example.ecommerrce_web.entity.User"/>
     <mapping class="org.example.ecommerrce_web.entity.Category"/>
     <mapping class="org.example.ecommerrce_web.entity.Product"/>
+    <mapping class="org.example.ecommerrce_web.entity.Cart"/>
   </session-factory>
 </hibernate-configuration>

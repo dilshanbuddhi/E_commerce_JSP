@@ -35,8 +35,11 @@ public class LoginServlet extends HttpServlet {
             session.getTransaction().commit();
 
             if (user != null) {
+                HttpSession httpSession = request.getSession();
+                httpSession.setAttribute("userId", user.getUserId()); // Store the userId in session
+                httpSession.setAttribute("userRole", user.getRole());
                 if (user.getRole().equals("Admin")){
-                    response.sendRedirect("getAllProduct?userId=" + user.getUserId());
+                    response.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
                 }else {
                     response.sendRedirect("getAllProduct?userId=" + user.getUserId());
                 }

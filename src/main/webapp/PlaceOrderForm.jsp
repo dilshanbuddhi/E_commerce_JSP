@@ -1,15 +1,15 @@
-<%@ page import="org.example.ecommerrce_web.entity.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.example.ecommerrce_web.entity.Category" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="org.example.ecommerrce_web.entity.Product" %><%--
+  Created by IntelliJ IDEA.
+  User: Buddhi
+  Date: 1/23/2025
+  Time: 7:32 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Waggy Pet Shop</title>
-    <!-- Google Font -->
+    <title>Title</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,7 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
     <style>
         body {
             font-family: 'Baloo 2', cursive !important;
@@ -60,7 +61,7 @@
         }
 
         #text{
-            margin-top: -20px;
+            margin-top: 30px;
         }
 
         .btn-primary {
@@ -136,7 +137,7 @@
         }
 
         .btn-add-cart {
-            width: 50%;
+            width: 23%;
             padding: 10px 0;
             font-weight: lighter;
             border-radius: 5px;
@@ -154,8 +155,13 @@
             transform: scale(1.2);
         }
 
+        .img-fluid {
+            max-width: 61%;
+            height: auto;
+        }
 
         .btn-heart {
+            margin-left: 20px;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -191,15 +197,24 @@
             border-radius: 30px;
             background: linear-gradient(90deg, rgba(244,225,176,1) 0%, rgba(255,225,198,1) 35%, rgba(252,245,238,1) 62%, rgba(255,255,255,1) 100%);        }
 
+        #mainSet{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
     </style>
+
 </head>
+
 <body>
 <%
-    String userId = request.getParameter("userId");
-    System.out.println(userId + " :User ID");
+    // Check if the userId is already in the session
+    String userId = (String) session.getAttribute("userId");
+    System.out.println(userId + " : User ID placeorder.jsp");
+
     boolean isLoggedIn = (userId != null);
-    if (userId != null) {
-        System.out.println("logged in");
+    if (isLoggedIn) {
+        System.out.println("User is logged in");
 %>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
@@ -214,7 +229,7 @@
 </script>
 <%
 } else {
-    System.out.println("not logged in");
+    System.out.println("User is not logged in");
 %>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
@@ -230,6 +245,7 @@
 <%
     }
 %>
+
 
 <!-- Header / Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -268,94 +284,157 @@
     </div>
 </nav>
 
-
-<a href="admin_dashboard.jsp">admin dashboard</a>
-<a href="testsinglepage.jsp">test dashboard</a>
-<!-- Search Bar -->
-<div class="container my-4">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search For More Than 10,000 Products">
-        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-    </div>
-</div>
-
-<!-- Hero Section -->
 <section class="hero-section py-5">
     <div class="container">
         <div class="row align-items-center">
 
 
             <div class="col-md-6" id="text">
-                <h1 class="display-4">Best Destination For <span>Your Pets</span></h1>
-                <p>Save 10 - 20% off</p>
-                <a href="#" class="btn btn-primary">Shop Now</a>
+                <h1 class="display-4">Single <span>Product</span></h1>
+                <p>Home/Pages/Single product</p>
             </div>
 
-            <div class="col-md-6">
+        <%--    <div class="col-md-6">
                 <img src="images/banner-img.png" alt="Dog with toy" height="450" width="350" />
-            </div>
+            </div>--%>
         </div>
     </div>
 </section>
 
-<Section id="cardSec">
-    <div id="cardset" class="row g-4">
-        <%
-            List<Category> categories = (List<Category>) request.getAttribute("categories");
-            List<Product> products = (List<Product>) request.getAttribute("products");
 
-            if (categories != null) {
-                for (Category category : categories) {
-        %>
+<%
+    Product product = (Product) request.getAttribute("product");
+    System.out.println(product);
+%>
 
-        <!-- Category Name -->
-        <h1 class="categoryName mb-4"><%= category.getName() %></h1>
+<div class="container my-5">
+    <div class="row align-items-center" id="mainSet">
+        <!-- Product Image Section -->
+        <div class="col-md-6">
+            <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="img-fluid shadow-sm rounded" style="border-radius: 16px;">
+        </div>
 
-        <%
-            if (products != null) {
-                for (Product product : products) {
-                    if (product.getCategory().getId() == category.getId()) {
-        %>
+        <!-- Product Details Section -->
+        <div class="col-md-6">
+            <!-- Product Title -->
+            <h1 class="display-4 fw-bold" style="color: #2c3e50;"><%= product.getName() %></h1>
 
-        <div class="card" style="width: 15rem; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px;">
-            <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="border-radius: 15px; height: 180px; object-fit: cover; margin-bottom: 15px;">
 
-            <h5 class="card-title" style="font-size: 2.2rem; color: #333;"><%= product.getName() %></h5>
-            <h5 class="card-title" style="font-size: 1.0rem; color: #333;"><%= product.getDescription() %></h5>
+            <!-- Product Description -->
+            <p class="lead text-muted" style="font-size: 1.2rem;"><%= product.getDescription() %></p>
 
-            <p class="card-price" style="color: #c4874a; font-size: 1.4rem;">Rs <%= product.getPrice() %>/=</p>
+            <!-- Product Price -->
+            <p class="text-primary" style="font-size: 2rem; font-weight: 600;">
+                Rs <%= product.getPrice() %>/=
+            </p>
 
-            <div style="display: flex; justify-content: space-between;">
-                <form class="productForm" style="display: none;" method="get" action="getSingleProduct">
-                    <input type="hidden" name="productId" value="<%= product.getId() %>">
-                    <input type="hidden" name="userId" value="<%= userId %>">
-                </form>
-                <button class="btn btn-add-cart" onclick="submitForm(this)" >Add to Cart</button>
+            <!-- Stock Information -->
+            <p class="text-muted" style="font-size: 1rem;">Only <%= product.getQuantity() %> left in stock</p>
+
+            <!-- Add to Cart and Wishlist Buttons Below -->
+            <div class="d-flex mt-4">
+                <!-- Add to Cart Button -->
+                <button class="btn btn-add-cart" data-bs-toggle="modal" data-bs-target="#orderModal" style="font-size: 1rem;">
+                    Place Order
+                </button>
+
+                <!-- Wishlist Button -->
                 <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
                     <i class="bi bi-cart"></i>
                 </button>
-
             </div>
         </div>
-
-
-        <%
-                    }
-                }
-            }
-        %>
-
-        <%
-                }
-            }
-        %>
     </div>
-</Section>
+</div>
 
+<!-- Order Modal -->
+<!-- Bootstrap Modal -->
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 shadow-lg">
+            <div class="modal-header border-0" style="background-color: #2c3e50; color: #fff;">
+                <h5 class="modal-title" id="orderModalLabel">🛒 Confirm Your Order</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <!-- Order Summary Section -->
+                <h6 class="fw-bold" style="color: #34495e;">Product: <%= product.getName() %></h6>
+                <p style="color: #7f8c8d;">Description: <%= product.getDescription() %></p>
+                <p class="fw-bold text-primary">Price: Rs <%= product.getPrice() %>/=</p>
 
+                <!-- Quantity Control -->
+                <div class="d-flex align-items-center justify-content-between">
+                    <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock : <%= product.getQuantity() %></span></p>
+                    <button class="btn btn-outline-secondary btn-sm" id="decreaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(-1)">-</button>
+                    <input type="text" id="quantityInput" class="form-control text-center" value="1" style="width: 50px;" readonly>
+                    <button class="btn btn-outline-secondary btn-sm" id="increaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(1)">+</button>
+                </div>
+                <hr>
+                <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice() %></span>/=</p>
+            </div>
+            <div class="modal-footer border-0 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmOrder()">Place Order</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- JavaScript to Handle Quantity and Total Calculation -->
+<script>
+    var pricePerUnit = <%= product.getPrice() %>; // The price of a single product
+    var quantity = 1;
+    var maxQuantity = <%= product.getQuantity() %>; // Maximum stock available
 
-<!-- Footer -->
+    // Function to update quantity and total price
+    function updateQuantity(amount) {
+        // Update quantity based on increment or decrement
+        quantity += amount;
+
+        // Ensure quantity is at least 1 and does not exceed the available stock
+        if (quantity < 1) {
+            quantity = 1;
+        } else if (quantity >= maxQuantity) {
+            quantity = maxQuantity; // Prevent incrementing beyond stock limit
+            alert("Only " + maxQuantity + " items in stock.");
+        }
+
+        // Update the quantity input field and quantity display
+        document.getElementById('quantityInput').value = quantity;
+
+        // Calculate the new total
+        var total = pricePerUnit * quantity;
+
+        // Update the total price in the modal
+        document.getElementById('orderTotal').innerText = total;
+    }
+
+    function confirmOrder() {
+        alert("Your order for " + quantity + " item(s) has been placed. Total: Rs " + (pricePerUnit * quantity) + "/=");
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // JavaScript to dynamically update modal content
+    const quantityInput = document.getElementById('quantityInput');
+    const orderQuantity = document.getElementById('orderQuantity');
+    const orderTotal = document.getElementById('orderTotal');
+    const productPrice = <%= product.getPrice() %>;
+
+    quantityInput.addEventListener('input', function() {
+        const quantity = parseInt(quantityInput.value) || 1;
+        orderQuantity.textContent = quantity;
+        orderTotal.textContent = productPrice * quantity;
+    });
+
+    function confirmOrder() {
+        // Add the logic for placing the order, such as submitting a form or making an API call
+        alert('Order confirmed!');
+    }
+</script>
+
 <footer class="text-center py-4">
     <div class="container">
         <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
@@ -363,22 +442,25 @@
 </footer>
 
 <script>
+    document.getElementById("decreaseQty").addEventListener("click", function() {
+        var qtyInput = document.getElementById("quantityInput");
+        var currentQty = parseInt(qtyInput.value);
+        if (currentQty > 1) { // Make sure quantity doesn't go below 1
+            qtyInput.value = currentQty - 1;
+        }
+    });
+
+    document.getElementById("increaseQty").addEventListener("click", function() {
+        var qtyInput = document.getElementById("quantityInput");
+        var currentQty = parseInt(qtyInput.value);
+        qtyInput.value = currentQty + 1;
+    });
+</script>
+<script>
     function submitForm(button) {
-        var form = button.parentElement.querySelector('.productForm');
+        const form = button.closest('.container').querySelector('.productForm');
         form.submit();
     }
-    function isloggin() {
-        var loginLink = <%=isLoggedIn%>
-        if (loginLink) {
-            console.log("add to cart");
-        }else {
-            console.log('logging first')
-
-        }
-    }
 </script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

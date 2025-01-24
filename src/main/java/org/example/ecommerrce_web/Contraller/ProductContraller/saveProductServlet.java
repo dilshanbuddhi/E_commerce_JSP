@@ -43,6 +43,7 @@ public class saveProductServlet extends HttpServlet {
 
         filePart.write(uploadPath + File.separator + fileName);
 
+
         ServletContext context = req.getServletContext();
         SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         Session session = sessionFactory.openSession();

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -24,6 +25,9 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private List<Cart> cart;
 
     public Product(long id, String name, double price, int quantity, String imageUrl) {
         this.id = id;
