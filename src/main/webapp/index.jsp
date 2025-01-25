@@ -298,6 +298,7 @@
     </div>
 </section>
 
+<%--
 <Section id="cardSec">
     <div id="cardset" class="row g-4">
         <%
@@ -334,7 +335,38 @@
                 <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
                     <i class="bi bi-cart"></i>
                 </button>
+            </div>
+        </div>
 
+        <div class="modal fade" id="addToCartModal<%= product.getId() %>" tabindex="-1" aria-labelledby="addToCartModalLabel<%= product.getId() %>" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addToCartModalLabel<%= product.getId() %>">Add <%= product.getName() %> to Cart</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <!-- Hidden field for product ID -->
+                            <input type="hidden" name="productId" value="<%= product.getId() %>">
+
+                            <!-- Input field for quantity -->
+                            <div class="mb-3">
+                                <label for="quantity<%= product.getId() %>" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="quantity<%= product.getId() %>" name="quantity" value="1" min="1" required>
+                            </div>
+
+                            <!-- Price information (optional) -->
+                            <div class="mb-3">
+                                <label class="form-label">Unit Price:</label>
+                                <p>$<%= product.getPrice() %></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" onclick="addCart(this)">Add to Cart</button>
+                            </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -351,6 +383,119 @@
         %>
     </div>
 </Section>
+--%>
+<Section id="cardSec">
+    <div id="cardset" class="row g-4">
+        <%
+            List<Category> categories = (List<Category>) request.getAttribute("categories");
+            List<Product> products = (List<Product>) request.getAttribute("products");
+            if (categories != null) {
+                for (Category category : categories) {
+        %>
+
+        <h1 class="categoryName mb-4"><%= category.getName() %></h1>
+
+        <%
+            if (products != null) {
+                for (Product product : products) {
+                    if (product.getCategory().getId() == category.getId()) {
+        %>
+
+        <div class="card" style="width: 15rem; padding: 15px;">
+            <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="height: 180px; object-fit: cover; margin-bottom: 15px;">
+            <h5 class="card-title"><%= product.getName() %></h5>
+            <p class="card-price">Rs <%= product.getPrice() %>/=</p>
+
+            <div style="display: flex; justify-content: space-between;">
+                <form class="productForm" style="display: none;" method="get" action="getSingleProduct">
+                    <input type="hidden" name="productId" value="<%= product.getId() %>">
+                    <input type="hidden" name="userId" value="<%= userId %>">
+                </form>
+                <button class="btn btn-add-cart" onclick="submitForm(this)">Add to Cart</button>
+                <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
+                    <i class="bi bi-cart"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal for Adding to Cart -->
+        <div class="modal fade" id="addToCartModal<%= product.getId() %>" tabindex="-1" aria-labelledby="addToCartModalLabel<%= product.getId() %>" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addToCartModalLabel<%= product.getId() %>">Add <%= product.getName() %> to Cart</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <!-- Hidden field for product ID -->
+                            <input type="hidden" name="productId" value="<%= product.getId() %>">
+
+                            <!-- Quantity input -->
+                            <div class="mb-3">
+                                <label for="quantity<%= product.getId() %>" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="quantity<%= product.getId() %>" name="quantity" value="1" min="1" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="addCart(this)">Add to Cart</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%
+                    }
+                }
+            }
+        %>
+
+        <%
+                }
+            }
+        %>
+    </div>
+</Section>
+<script src="JQ/jquery-3.7.1.min.js"></script>
+
+<script>
+    function addCart(button) {
+        // Get the modal form closest to the button clicked
+        var form = $(button).closest('form');
+
+        // Get product ID and quantity values from the form
+        var productId = form.find('input[name="productId"]').val();
+        var quantity = form.find('input[name="quantity"]').val();
+
+        // Send an AJAX POST request to the server
+        $.ajax({
+            url: '/addToCart', // Your server endpoint
+            type: 'POST',
+            data: {
+                productId: productId,
+                quantity: quantity
+            },
+            success: function(response) {
+                // Handle success (e.g., show a message or update cart UI)
+                alert('Product added to cart successfully!');
+                // Optionally, close the modal
+                $(form).closest('.modal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                alert('Error adding product to cart: ' + error);
+            }
+        });
+    }
+
+    function submitForm(button) {
+        // Trigger the hidden form for the specific product
+        $(button).siblings('.productForm').submit();
+    }
+</script>
 
 
 
@@ -361,8 +506,35 @@
         <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
     </div>
 </footer>
-
+<script src="JQ/jquery-3.7.1.min.js"></script>
 <script>
+    function addCart(button) {
+        var form = $(button).closest('form');
+        var productId = form.find('input[name="productId"]').val();
+        var quantity = form.find('input[name="quantity"]').val();
+
+        console.log("Adding to cart:", productId, quantity);
+
+        $.ajax({
+            url: 'http://localhost:8080/E_Commerrce_Web_war_exploded/cartSave',
+            method: 'POST',
+            data: {
+                productId: productId,
+                quantity: quantity,
+                userId : '<%= userId %>'
+            },
+            success: function(response) {
+                console.log('Success:', response);
+                alert('Product added to cart successfully!');
+                $(form).closest('.modal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                alert('Error adding product to cart: ' + error);
+            }
+        });
+    }
+
     function submitForm(button) {
         var form = button.parentElement.querySelector('.productForm');
         form.submit();
