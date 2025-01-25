@@ -495,9 +495,6 @@
     }
 </script>
 
-
-
-
 <!-- Footer -->
 <footer class="text-center py-4">
     <div class="container">

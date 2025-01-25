@@ -234,39 +234,27 @@
     }
 %>
 
-
 <!-- Header / Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="images/dog.png" height="40" width="40"/>  Waggy Pet Shop
+            <img src="images/dog.png" height="40" width="40"/> Waggy Pet Shop
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="getAllProduct">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="getAllProduct">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
             </ul>
             <div class="d-flex align-items-center">
                 <a href="#" id="profileLink" class="nav-link" style="display: none;"><i class="bi bi-person"></i></a>
-                <a href="registration.jsp" id="loginLink" class="nav-link" style="display: block;">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                </a>
+                <a href="registration.jsp" id="loginLink" class="nav-link" style="display: block;"><i class="bi bi-box-arrow-in-right"></i></a>
                 <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
-                <a href="#" class="nav-link position-relative">
-                    <i class="bi bi-cart"></i></a>
+                <a href="#" class="nav-link position-relative"><i class="bi bi-cart"></i></a>
             </div>
         </div>
     </div>
@@ -275,115 +263,113 @@
 <section class="hero-section py-5">
     <div class="container">
         <div class="row align-items-center">
-
-
             <div class="col-md-6" id="text">
                 <h1 class="display-4">Your <span>Fav</span></h1>
                 <p>Cart </p>
             </div>
-
-            <%--    <div class="col-md-6">
-                    <img src="images/banner-img.png" alt="Dog with toy" height="450" width="350" />
-                </div>--%>
         </div>
     </div>
 </section>
 
-
-
-<Section id="cardSec">
+<section id="cardSec">
     <div id="cardset" class="row g-4">
         <%
-            System.out.println("cart jsp");
             List<Cart> cartList = (List<Cart>) request.getAttribute("cartList");
-            if (cartList != null) {
-                System.out.println("cart eka null na 1111");
-            } else {
-                System.out.println("cart eka null!");
-            }
-        %>
-
-        <h1>Cart Product From Here</h1>
-
-        <%
             List<Product> products = (List<Product>) request.getAttribute("productsforcart");
-            if (products != null) {
-                System.out.println("Product list is not null");
+
+            if (products != null && cartList != null) {
                 for (Product product : products) {
-                    System.out.println("Product: " + product.getName());
+                    for (Cart cart : cartList) {
+                        if (cart.getProduct().getId() == product.getId()) {
         %>
-
-
-        <%
-            if (cartList != null) {
-                System.out.println("Cart list is not null");
-                for (Cart cart : cartList) {
-                    // Ensure you compare the product IDs correctly
-                    if (cart.getProduct().getId() == product.getId()) {
-        %>
-
         <div class="card" style="width: 15rem; padding: 15px;">
             <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="height: 180px; object-fit: cover; margin-bottom: 15px;">
             <h5 class="card-title"><%= product.getName() %></h5>
             <p class="card-price">Rs <%= product.getPrice() %>/=</p>
 
             <div style="display: flex; justify-content: space-between;">
-                <form class="productForm" style="display: none;" method="get" action="getSingleProduct">
-                    <input type="hidden" name="productId" value="<%= product.getId() %>">
-                    <input type="hidden" name="userId" value="<%= userId %>">
-                </form>
-                <button class="btn btn-add-cart" onclick="submitForm(this)">Add to Cart</button>
-                <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
-                    <i class="bi bi-cart"></i>
+                <button class="btn btn-add-cart" data-bs-toggle="modal" data-bs-target="#orderModal-<%= product.getId() %>" style="font-size: 1rem;">
+                    Place Order
                 </button>
             </div>
         </div>
 
-        <!-- Modal for Adding to Cart -->
-        <div class="modal fade" id="addToCartModal<%= product.getId() %>" tabindex="-1" aria-labelledby="addToCartModalLabel<%= product.getId() %>" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addToCartModalLabel<%= product.getId() %>">Add <%= product.getName() %> to Cart</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal for Order Confirmation -->
+        <div class="modal fade" id="orderModal-<%= product.getId() %>" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-3 shadow-lg">
+                    <div class="modal-header border-0" style="background-color: #2c3e50; color: #fff;">
+                        <h5 class="modal-title" id="orderModalLabel">🛒 Confirm Your Order</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <!-- Hidden field for product ID -->
-                            <input type="hidden" name="productId" value="<%= product.getId() %>">
+                    <div class="modal-body p-4">
+                        <h6 class="fw-bold" style="color: #34495e;">Product: <%= product.getName() %></h6>
+                        <p style="color: #7f8c8d;">Description: <%= product.getDescription() %></p>
+                        <p class="fw-bold text-primary">Price: Rs <%= product.getPrice() %>/=</p>
 
-                            <!-- Quantity input -->
-                            <div class="mb-3">
-                                <label for="quantity<%= product.getId() %>" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" id="quantity<%= product.getId() %>" name="quantity" value="1" min="1" required>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="addCart(this)">Add to Cart</button>
-                            </div>
-                        </form>
+                        <!-- Quantity Control -->
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock: <%= product.getQuantity() %></span></p>
+                            <button class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;" onclick="updateQuantity(-1, <%= product.getPrice() %>)">-</button>
+                            <input type="text" id="quantityInput" class="form-control text-center" value="1" style="width: 50px;" readonly>
+                            <button class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;" onclick="updateQuantity(1, <%= product.getPrice() %>)">+</button>
+                        </div>
+                        <hr>
+                        <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice() %></span>/=</p>
                     </div>
+
+                    <div class="modal-footer border-0 d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('placeOrderForm').submit()">Place Order</button>
+                    </div>
+                    <form action="placeOrder" method="post" id="placeOrderForm-<%= product.getId() %>">
+                        <input type="hidden" name="qty" value="1" id="qty-<%= product.getId() %>">
+                        <input type="hidden" name="pid" value="<%= product.getId() %>">
+                        <input type="hidden" name="uid" value="<%= userId %>">
+                        <input type="hidden" name="total" value="<%= product.getPrice() %>" id="totalinput-<%= product.getId() %>">
+                    </form>
                 </div>
             </div>
         </div>
 
         <%
+                        }
                     }
                 }
-            }
-        %>
-
-        <%
-                }
             } else {
-                System.out.println("Product list is null!");
+                System.out.println("Product or Cart list is null!");
             }
         %>
     </div>
-</Section>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function updateQuantity(productId, price, change) {
+        // Get the quantity input field and the total input field for the specific product
+        var quantityInput = document.getElementById('qty-' + productId);
+        var totalInput = document.getElementById('totalinput-' + productId);
 
+        var currentQty = parseInt(quantityInput.value);
+
+        var newQty = currentQty + change;
+
+        if (newQty < 1) {
+            newQty = 1;
+        }
+
+        quantityInput.value = newQty;
+
+        var newTotal = newQty * price;
+        totalInput.value = newTotal;
+
+        document.getElementById('orderTotal-' + productId).innerText = newTotal;
+    }
+    function submitForm(button) {
+        const form = button.closest('.container').querySelector('.productForm');
+        form.submit();
+    }
+</script>
 </body>
+
 </html>
