@@ -20,7 +20,6 @@ public class getSingleProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long productId = Long.parseLong(req.getParameter("productId"));
         System.out.println(productId + "productId");
-        String userid = req.getParameter("userId");
         ServletContext servletContext = getServletContext();
         SessionFactory sessionFactory = (SessionFactory) servletContext.getAttribute("SessionFactory");
         Session session = sessionFactory.openSession();
@@ -44,7 +43,7 @@ public class getSingleProductServlet extends HttpServlet {
             req.setAttribute("product", null);
         }
 
-        req.getRequestDispatcher("PlaceOrderForm.jsp?userId=" + userid).forward(req, resp);
+        req.getRequestDispatcher("PlaceOrderForm.jsp").forward(req, resp);
 
     }
 }

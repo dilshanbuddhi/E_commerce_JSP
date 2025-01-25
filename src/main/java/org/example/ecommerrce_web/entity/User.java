@@ -1,6 +1,5 @@
 package org.example.ecommerrce_web.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +23,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Cart> cart;
+    @OneToMany(mappedBy = "user")
+    private List<Orders> order;
 
     public User(Long userId, String userName, String email, String password, String role) {
         this.userId = userId;

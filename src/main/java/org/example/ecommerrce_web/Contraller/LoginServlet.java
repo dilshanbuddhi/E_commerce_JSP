@@ -36,12 +36,13 @@ public class LoginServlet extends HttpServlet {
 
             if (user != null) {
                 HttpSession httpSession = request.getSession();
-                httpSession.setAttribute("userId", user.getUserId()); // Store the userId in session
+                String uid = String.valueOf(user.getUserId());
+                httpSession.setAttribute("userId", uid); // Store the userId in session
                 httpSession.setAttribute("userRole", user.getRole());
                 if (user.getRole().equals("Admin")){
                     response.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
                 }else {
-                    response.sendRedirect("getAllProduct?userId=" + user.getUserId());
+                    response.sendRedirect("getAllProductForCustomer?userId=" + user.getUserId());
                 }
             } else {
                 response.sendRedirect("getAllProduct?loginError=failed");

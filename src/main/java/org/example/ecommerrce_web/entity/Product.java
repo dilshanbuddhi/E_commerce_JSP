@@ -29,6 +29,9 @@ public class Product {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
     private List<Cart> cart;
 
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetail> orderDetail;
+
     public Product(long id, String name, double price, int quantity, String imageUrl) {
         this.id = id;
         this.name = name;

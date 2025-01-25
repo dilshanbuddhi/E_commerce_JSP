@@ -348,8 +348,7 @@
 </div>
 
 <!-- Order Modal -->
-<!-- Bootstrap Modal -->
-<!-- Bootstrap Modal -->
+
 <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-3 shadow-lg">
@@ -364,6 +363,7 @@
                 <p class="fw-bold text-primary">Price: Rs <%= product.getPrice() %>/=</p>
 
                 <!-- Quantity Control -->
+
                 <div class="d-flex align-items-center justify-content-between">
                     <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock : <%= product.getQuantity() %></span></p>
                     <button class="btn btn-outline-secondary btn-sm" id="decreaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(-1)">-</button>
@@ -373,46 +373,49 @@
                 <hr>
                 <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice() %></span>/=</p>
             </div>
+
             <div class="modal-footer border-0 d-flex justify-content-between">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="confirmOrder()">Place Order</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('placeOrderForm').submit()">Place Order</button>
             </div>
+            <form action="placeOrder" method="post" id="placeOrderForm">
+                <input type="hidden" name="qty" value="1" id="qty">
+                <input type="hidden" name="pid" value="<%= product.getId() %>">
+                <input type="hidden" name="uid" value="<%= userId %>">
+                <input type="hidden" name="total" value="1" id="totalinput">
+                <input type="hidden" name="price" value="<%= product.getPrice() %>">
+
+            </form>
+
         </div>
     </div>
 </div>
 
 <!-- JavaScript to Handle Quantity and Total Calculation -->
 <script>
-    var pricePerUnit = <%= product.getPrice() %>; // The price of a single product
+    var pricePerUnit = <%= product.getPrice() %>;
     var quantity = 1;
     var maxQuantity = <%= product.getQuantity() %>; // Maximum stock available
 
-    // Function to update quantity and total price
     function updateQuantity(amount) {
-        // Update quantity based on increment or decrement
         quantity += amount;
-
-        // Ensure quantity is at least 1 and does not exceed the available stock
         if (quantity < 1) {
             quantity = 1;
         } else if (quantity >= maxQuantity) {
-            quantity = maxQuantity; // Prevent incrementing beyond stock limit
+            quantity = maxQuantity;
             alert("Only " + maxQuantity + " items in stock.");
         }
 
-        // Update the quantity input field and quantity display
         document.getElementById('quantityInput').value = quantity;
+        document.getElementById('qty').value = quantity;
 
-        // Calculate the new total
         var total = pricePerUnit * quantity;
 
-        // Update the total price in the modal
         document.getElementById('orderTotal').innerText = total;
+        document.getElementById('totalinput').value = total;
     }
 
-    function confirmOrder() {
-        alert("Your order for " + quantity + " item(s) has been placed. Total: Rs " + (pricePerUnit * quantity) + "/=");
-    }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -421,12 +424,22 @@
     const quantityInput = document.getElementById('quantityInput');
     const orderQuantity = document.getElementById('orderQuantity');
     const orderTotal = document.getElementById('orderTotal');
-    const productPrice = <%= product.getPrice() %>;
+    const productPrice = parseFloat(<%= product.getPrice() %>);
 
     quantityInput.addEventListener('input', function() {
         const quantity = parseInt(quantityInput.value) || 1;
-        orderQuantity.textContent = quantity;
-        orderTotal.textContent = productPrice * quantity;
+        const totalPrice = productPrice * quantity;
+        console.log(totalPrice , " total eka")
+
+
+        document.getElementById("totalinput").value = totalPrice;
+
+        if (orderTotal) {
+            orderTotal.textContent = totalPrice;
+        }
+
+        // Optional: log the updated total for debugging
+        console.log("Updated total:", totalPrice);
     });
 
     function confirmOrder() {
@@ -450,11 +463,11 @@
         }
     });
 
-    document.getElementById("increaseQty").addEventListener("click", function() {
+/*    document.getElementById("increaseQty").addEventListener("click", function() {
         var qtyInput = document.getElementById("quantityInput");
         var currentQty = parseInt(qtyInput.value);
         qtyInput.value = currentQty + 1;
-    });
+    });*/
 </script>
 <script>
     function submitForm(button) {
