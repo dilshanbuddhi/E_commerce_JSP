@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("getAllProductForCustomer?userId=" + user.getUserId());
                 }
             } else {
-                response.sendRedirect("getAllProduct?loginError=failed");
+                response.sendRedirect("getAllProductForCustomer?loginError=failed");
             }
 
         } catch (Exception e) {

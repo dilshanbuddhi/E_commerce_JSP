@@ -36,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
             session.save(user);
             session.getTransaction().commit();
             session.close();
-            resp.sendRedirect("admin_dashboard.jsp?userId=" + user.getUserId());
+            resp.sendRedirect("getAllProductForCustomer.jsp?userId=" + user.getUserId());
 
 
         }else {

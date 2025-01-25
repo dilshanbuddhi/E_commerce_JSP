@@ -1,15 +1,16 @@
-<%@ page import="org.example.ecommerrce_web.entity.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.example.ecommerrce_web.entity.Category" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="org.example.ecommerrce_web.entity.Cart" %>
+<%@ page import="org.example.ecommerrce_web.entity.Product" %><%--
+  Created by IntelliJ IDEA.
+  User: Buddhi
+  Date: 1/25/2025
+  Time: 2:00 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Waggy Pet Shop</title>
-    <!-- Google Font -->
+    <title>Title</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +18,7 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
     <style>
         body {
             font-family: 'Baloo 2', cursive !important;
@@ -195,11 +197,12 @@
 </head>
 <body>
 <%
-    String userId = request.getParameter("userId");
-    System.out.println(userId + " :User ID");
+    String userId = (String) session.getAttribute("userId");
+    System.out.println(userId + " : User ID placeorder.jsp");
+
     boolean isLoggedIn = (userId != null);
-    if (userId != null) {
-        System.out.println("logged in");
+    if (isLoggedIn) {
+        System.out.println("User is logged in");
 %>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
@@ -214,7 +217,7 @@
 </script>
 <%
 } else {
-    System.out.println("not logged in");
+    System.out.println("User is not logged in");
 %>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
@@ -230,6 +233,7 @@
 <%
     }
 %>
+
 
 <!-- Header / Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -261,142 +265,61 @@
                     <i class="bi bi-box-arrow-in-right"></i>
                 </a>
                 <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
-                <a href="getCartData" class="nav-link position-relative">
+                <a href="#" class="nav-link position-relative">
                     <i class="bi bi-cart"></i></a>
             </div>
         </div>
     </div>
 </nav>
 
-
-<!-- Search Bar -->
-<div class="container my-4">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search For More Than 10,000 Products">
-        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-    </div>
-</div>
-
-<!-- Hero Section -->
 <section class="hero-section py-5">
     <div class="container">
         <div class="row align-items-center">
 
 
             <div class="col-md-6" id="text">
-                <h1 class="display-4">Best Destination For <span>Your Pets</span></h1>
-                <p>Save 10 - 20% off</p>
-                <a href="#" class="btn btn-primary">Shop Now</a>
+                <h1 class="display-4">Your <span>Fav</span></h1>
+                <p>Cart </p>
             </div>
 
-            <div class="col-md-6">
-                <img src="images/banner-img.png" alt="Dog with toy" height="450" width="350" />
-            </div>
+            <%--    <div class="col-md-6">
+                    <img src="images/banner-img.png" alt="Dog with toy" height="450" width="350" />
+                </div>--%>
         </div>
     </div>
 </section>
 
-<%--
+
+
 <Section id="cardSec">
     <div id="cardset" class="row g-4">
         <%
-            List<Category> categories = (List<Category>) request.getAttribute("categories");
-            List<Product> products = (List<Product>) request.getAttribute("products");
-
-            if (categories != null) {
-                for (Category category : categories) {
-        %>
-
-        <!-- Category Name -->
-        <h1 class="categoryName mb-4"><%= category.getName() %></h1>
-
-        <%
-            if (products != null) {
-                for (Product product : products) {
-                    if (product.getCategory().getId() == category.getId()) {
-        %>
-
-        <div class="card" style="width: 15rem; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px;">
-            <img src="<%= request.getContextPath() %>/uploads/<%= product.getImageUrl() %>" alt="Product Image" class="card-img-top" style="border-radius: 15px; height: 180px; object-fit: cover; margin-bottom: 15px;">
-
-            <h5 class="card-title" style="font-size: 2.2rem; color: #333;"><%= product.getName() %></h5>
-            <h5 class="card-title" style="font-size: 1.0rem; color: #333;"><%= product.getDescription() %></h5>
-
-            <p class="card-price" style="color: #c4874a; font-size: 1.4rem;">Rs <%= product.getPrice() %>/=</p>
-
-            <div style="display: flex; justify-content: space-between;">
-                <form class="productForm" style="display: none;" method="get" action="getSingleProduct">
-                    <input type="hidden" name="productId" value="<%= product.getId() %>">
-                    <input type="hidden" name="userId" value="<%= userId %>">
-                </form>
-                <button class="btn btn-add-cart" onclick="submitForm(this)" >Add to Cart</button>
-                <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
-                    <i class="bi bi-cart"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="modal fade" id="addToCartModal<%= product.getId() %>" tabindex="-1" aria-labelledby="addToCartModalLabel<%= product.getId() %>" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addToCartModalLabel<%= product.getId() %>">Add <%= product.getName() %> to Cart</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                            <!-- Hidden field for product ID -->
-                            <input type="hidden" name="productId" value="<%= product.getId() %>">
-
-                            <!-- Input field for quantity -->
-                            <div class="mb-3">
-                                <label for="quantity<%= product.getId() %>" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" id="quantity<%= product.getId() %>" name="quantity" value="1" min="1" required>
-                            </div>
-
-                            <!-- Price information (optional) -->
-                            <div class="mb-3">
-                                <label class="form-label">Unit Price:</label>
-                                <p>$<%= product.getPrice() %></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" onclick="addCart(this)">Add to Cart</button>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <%
-                    }
-                }
+            System.out.println("cart jsp");
+            List<Cart> cartList = (List<Cart>) request.getAttribute("cartList");
+            if (cartList != null) {
+                System.out.println("cart eka null na 1111");
+            } else {
+                System.out.println("cart eka null!");
             }
         %>
 
-        <%
-                }
-            }
-        %>
-    </div>
-</Section>
---%>
-<Section id="cardSec">
-    <div id="cardset" class="row g-4">
-        <%
-            List<Category> categories = (List<Category>) request.getAttribute("categories");
-            List<Product> products = (List<Product>) request.getAttribute("products");
-            if (categories != null) {
-                for (Category category : categories) {
-        %>
-
-        <h1 class="categoryName mb-4"><%= category.getName() %></h1>
+        <h1>Cart Product From Here</h1>
 
         <%
+            List<Product> products = (List<Product>) request.getAttribute("productsforcart");
             if (products != null) {
+                System.out.println("Product list is not null");
                 for (Product product : products) {
-                    if (product.getCategory().getId() == category.getId()) {
+                    System.out.println("Product: " + product.getName());
+        %>
+
+
+        <%
+            if (cartList != null) {
+                System.out.println("Cart list is not null");
+                for (Cart cart : cartList) {
+                    // Ensure you compare the product IDs correctly
+                    if (cart.getProduct().getId() == product.getId()) {
         %>
 
         <div class="card" style="width: 15rem; padding: 15px;">
@@ -453,102 +376,14 @@
 
         <%
                 }
+            } else {
+                System.out.println("Product list is null!");
             }
         %>
     </div>
 </Section>
-<script src="JQ/jquery-3.7.1.min.js"></script>
 
-<script>
-    function addCart(button) {
-        // Get the modal form closest to the button clicked
-        var form = $(button).closest('form');
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-        // Get product ID and quantity values from the form
-        var productId = form.find('input[name="productId"]').val();
-        var quantity = form.find('input[name="quantity"]').val();
-
-        // Send an AJAX POST request to the server
-        $.ajax({
-            url: '/addToCart', // Your server endpoint
-            type: 'POST',
-            data: {
-                productId: productId,
-                quantity: quantity
-            },
-            success: function(response) {
-                // Handle success (e.g., show a message or update cart UI)
-                alert('Product added to cart successfully!');
-                // Optionally, close the modal
-                $(form).closest('.modal').modal('hide');
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                alert('Error adding product to cart: ' + error);
-            }
-        });
-    }
-
-    function submitForm(button) {
-        // Trigger the hidden form for the specific product
-        $(button).siblings('.productForm').submit();
-    }
-</script>
-
-
-
-
-<!-- Footer -->
-<footer class="text-center py-4">
-    <div class="container">
-        <p>&copy; 2025 Waggy Pet Shop. All Rights Reserved.</p>
-    </div>
-</footer>
-<script src="JQ/jquery-3.7.1.min.js"></script>
-<script>
-    function addCart(button) {
-        var form = $(button).closest('form');
-        var productId = form.find('input[name="productId"]').val();
-        var quantity = form.find('input[name="quantity"]').val();
-
-        console.log("Adding to cart:", productId, quantity);
-
-        $.ajax({
-            url: 'http://localhost:8080/E_Commerrce_Web_war_exploded/cartSave',
-            method: 'POST',
-            data: {
-                productId: productId,
-                quantity: quantity,
-                userId : '<%= userId %>'
-            },
-            success: function(response) {
-                console.log('Success:', response);
-                alert('Product added to cart successfully!');
-                $(form).closest('.modal').modal('hide');
-            },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                alert('Error adding product to cart: ' + error);
-            }
-        });
-    }
-
-    function submitForm(button) {
-        var form = button.parentElement.querySelector('.productForm');
-        form.submit();
-    }
-    function isloggin() {
-        var loginLink = <%=isLoggedIn%>
-        if (loginLink) {
-            console.log("add to cart");
-        }else {
-            console.log('logging first')
-
-        }
-    }
-</script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
