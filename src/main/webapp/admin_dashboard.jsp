@@ -149,7 +149,7 @@
                     <a class="nav-link" href="getProductList">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="orderView.jsp">Order</a>
+                    <a class="nav-link" href="getAllOrders">Order</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">

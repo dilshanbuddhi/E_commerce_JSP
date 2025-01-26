@@ -1,15 +1,16 @@
-<%@ page import="org.example.ecommerrce_web.entity.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.example.ecommerrce_web.entity.Category" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="org.example.ecommerrce_web.entity.Product" %>
+<%@ page import="org.example.ecommerrce_web.entity.Category" %><%--
+  Created by IntelliJ IDEA.
+  User: Buddhi
+  Date: 1/26/2025
+  Time: 12:48 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Waggy Pet Shop</title>
-    <!-- Google Font -->
+    <title>Title</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +18,7 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
     <style>
         body {
             font-family: 'Baloo 2', cursive !important;
@@ -192,6 +194,7 @@
             background: linear-gradient(90deg, rgba(244,225,176,1) 0%, rgba(255,225,198,1) 35%, rgba(252,245,238,1) 62%, rgba(255,255,255,1) 100%);        }
 
     </style>
+
 </head>
 <body>
 <%
@@ -314,7 +317,7 @@
 
             <div class="col-md-6" id="text">
                 <h1 class="display-4">Best Destination For <span>Your Pets</span></h1>
-                <p>Save 10 - 20% off</p>
+                <p>categories</p>
                 <a href="#" class="btn btn-primary">Shop Now</a>
             </div>
 
@@ -415,20 +418,19 @@
 --%>
 
 <Section id="cardSec">
-    <div id="cardset" class="row g-4">
-        <%
-            List<Category> categories = (List<Category>) request.getAttribute("categories");
+    <div id="cardset" class="row g-4"
+
+    <%
             List<Product> products = (List<Product>) request.getAttribute("products");
-            if (categories != null) {
-                for (Category category : categories) {
-        %>
+        String name=request.getParameter("categoryId");
+            %>
+    <h1 class="categoryName mb-4"><%= name %></h1>
 
-        <h1 class="categoryName mb-4"><%= category.getName() %></h1>
+    <%
 
-        <%
             if (products != null) {
                 for (Product product : products) {
-                    if (product.getCategory().getId() == category.getId()) {
+
         %>
 
         <div class="card" style="width: 15rem; padding: 15px;">
@@ -479,14 +481,13 @@
 
         <%
                     }
-                }
-            }
+
+            }else {
+                        System.out.println("product na");
+                    }
         %>
 
-        <%
-                }
-            }
-        %>
+
     </div>
 </Section>
 
@@ -500,7 +501,7 @@
 <script src="JQ/jquery-3.7.1.min.js"></script>
 
 <script>
-let log;
+    let log;
     $("#testbtn").on("click", function() {
         console.log("clicked");
         log = <%=userId%>;
@@ -541,7 +542,7 @@ let log;
         console.log(log,  "awa")
         if (log != null) {
             console.log("null na")
-           $(button).siblings('.productForm').submit();
+            $(button).siblings('.productForm').submit();
         }else {
             alert("login first");
         }
