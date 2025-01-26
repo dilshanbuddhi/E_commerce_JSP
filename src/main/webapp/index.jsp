@@ -210,6 +210,7 @@
     console.log(loggedIn + " : loggedIn status");
 
     window.addEventListener('DOMContentLoaded', function () {
+
         var loginLink = document.getElementById("loginLink");
         var profileLink = document.getElementById("profileLink");
 
