@@ -198,10 +198,17 @@
     String userId = request.getParameter("userId");
     System.out.println(userId + " :User ID");
     boolean isLoggedIn = (userId != null);
+    System.out.println(isLoggedIn + " : isLoggedIn");
     if (userId != null) {
         System.out.println("logged in");
 %>
 <script>
+    console.log("Script loaded.");
+
+    // Pass the isLoggedIn value as a string to JS
+    let loggedIn = "<%= isLoggedIn ? "true" : "false" %>";
+    console.log(loggedIn + " : loggedIn status");
+
     window.addEventListener('DOMContentLoaded', function () {
         var loginLink = document.getElementById("loginLink");
         var profileLink = document.getElementById("profileLink");
@@ -268,14 +275,32 @@
     </div>
 </nav>
 
-
+<a href="admin_dashboard.jsp">admin </a>
 <!-- Search Bar -->
 <div class="container my-4">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search For More Than 10,000 Products">
-        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+    <%
+        List<Category> categoriess = (List<Category>) request.getAttribute("categories");
+    %>
+
+    <!-- Dropdown for category names -->
+    <div class="input-group mb-3">
+        <!-- Dropdown to select category -->
+        <select id="categoryDropdown" class="form-select mb-4" onchange="filterCategory()">
+            <option value="all">All Categories</option>
+            <%
+                if (categoriess != null) {
+                    for (Category category : categoriess) {
+            %>
+            <option value="<%= category.getId() %>"><%= category.getName() %></option>
+            <%
+                    }
+                }
+            %>
+        </select>
+
     </div>
 </div>
+
 
 <!-- Hero Section -->
 <section class="hero-section py-5">
@@ -382,6 +407,7 @@
     </div>
 </Section>
 --%>
+
 <Section id="cardSec">
     <div id="cardset" class="row g-4">
         <%
@@ -409,7 +435,7 @@
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
                     <input type="hidden" name="userId" value="<%= userId %>">
                 </form>
-                <button class="btn btn-add-cart" onclick="submitForm(this)">Add to Cart</button>
+                <button class="btn btn-add-cart" onclick="submitForm(this)">Get Now</button>
                 <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
                     <i class="bi bi-cart"></i>
                 </button>
@@ -490,8 +516,12 @@
     }
 
     function submitForm(button) {
-        // Trigger the hidden form for the specific product
-        $(button).siblings('.productForm').submit();
+        var loginLink = <%=isLoggedIn%>
+        if (loginLink) {
+            $(button).siblings('.productForm').submit();
+        }else {
+            alert("login first");
+        }
     }
 </script>
 
@@ -502,6 +532,9 @@
     </div>
 </footer>
 <script src="JQ/jquery-3.7.1.min.js"></script>
+<script>
+
+</script>
 <script>
     function addCart(button) {
         var form = $(button).closest('form');

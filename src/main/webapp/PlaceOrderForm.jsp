@@ -461,11 +461,6 @@
         }
     });
 
-/*    document.getElementById("increaseQty").addEventListener("click", function() {
-        var qtyInput = document.getElementById("quantityInput");
-        var currentQty = parseInt(qtyInput.value);
-        qtyInput.value = currentQty + 1;
-    });*/
 </script>
 <script>
     function submitForm(button) {

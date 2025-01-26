@@ -179,12 +179,12 @@
         /* Hover Effects */
         .btn-heart:hover {
             border-color: #ffffff;
-            background-color: #d6aaec; /* Orange background on hover */
+            background-color: #ef8c8c; /* Orange background on hover */
             transform: scale(1.2); /* Scale button up on hover */
         }
 
         .btn-heart:hover i {
-            color: #f108e6; /* Change heart color to white on hover */
+            color: #f10808; /* Change heart color to white on hover */
             transform: scale(1.2); /* Slightly scale up the heart icon */
         }
         .categoryName {
@@ -291,28 +291,57 @@
                 <button class="btn btn-add-cart" data-bs-toggle="modal" data-bs-target="#orderModal-<%= product.getId() %>" style="font-size: 1rem;">
                     Place Order
                 </button>
+                <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getId() %>">
+                    <i class="bi bi-trash"></i>
+                </button>
+
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal<%= product.getId() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= product.getId() %>" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel<%= product.getId() %>">Delete Product <%= product.getName()%></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="deleteCart" method="post">
+                            <!-- Hidden field to pass the product ID -->
+                            <input type="hidden" name="cartId" value="<%= cart.getId() %>">
+                            <p>Are you sure you want to delete this product?</p>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit the form to delete the product -->
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Modal for Order Confirmation -->
-        <div class="modal fade" id="orderModal-<%= product.getId() %>" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal fade" id="orderModal-<%= product.getId() %>" tabindex="-1" aria-labelledby="orderModalLabel-<%= product.getId() %>" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content rounded-3 shadow-lg">
                     <div class="modal-header border-0" style="background-color: #2c3e50; color: #fff;">
-                        <h5 class="modal-title" id="orderModalLabel">🛒 Confirm Your Order</h5>
+                        <h5 class="modal-title" id="orderModalLabel-<%= product.getId() %>">🛒 Confirm Your Order</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
+                        <!-- Order Summary Section -->
                         <h6 class="fw-bold" style="color: #34495e;">Product: <%= product.getName() %></h6>
                         <p style="color: #7f8c8d;">Description: <%= product.getDescription() %></p>
                         <p class="fw-bold text-primary">Price: Rs <%= product.getPrice() %>/=</p>
 
                         <!-- Quantity Control -->
                         <div class="d-flex align-items-center justify-content-between">
-                            <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock: <%= product.getQuantity() %></span></p>
-                            <button class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;" onclick="updateQuantity(-1, <%= product.getPrice() %>)">-</button>
+                            <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock : <%= product.getQuantity() %></span></p>
+                            <button class="btn btn-outline-secondary btn-sm" id="decreaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(-1,<%= product.getPrice() %>)">-</button>
                             <input type="text" id="quantityInput" class="form-control text-center" value="1" style="width: 50px;" readonly>
-                            <button class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;" onclick="updateQuantity(1, <%= product.getPrice() %>)">+</button>
+                            <button class="btn btn-outline-secondary btn-sm" id="increaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(1)">+</button>
                         </div>
                         <hr>
                         <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice() %></span>/=</p>
@@ -320,14 +349,16 @@
 
                     <div class="modal-footer border-0 d-flex justify-content-between">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="document.getElementById('placeOrderForm').submit()">Place Order</button>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('placeOrderForm-<%= product.getId() %>').submit()">Place Order</button>
                     </div>
                     <form action="placeOrder" method="post" id="placeOrderForm-<%= product.getId() %>">
                         <input type="hidden" name="qty" value="1" id="qty-<%= product.getId() %>">
                         <input type="hidden" name="pid" value="<%= product.getId() %>">
                         <input type="hidden" name="uid" value="<%= userId %>">
-                        <input type="hidden" name="total" value="<%= product.getPrice() %>" id="totalinput-<%= product.getId() %>">
+                        <input type="hidden" name="total" value="1" id="totalinput-<%= product.getId() %>">
+                        <input type="hidden" name="price" value="<%= product.getPrice() %>">
                     </form>
+
                 </div>
             </div>
         </div>
@@ -342,34 +373,40 @@
         %>
     </div>
 </section>
+<!-- Modal -->
+
+<script src="JQ/jquery-3.7.1.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function updateQuantity(productId, price, change) {
-        // Get the quantity input field and the total input field for the specific product
-        var quantityInput = document.getElementById('qty-' + productId);
-        var totalInput = document.getElementById('totalinput-' + productId);
+    function updateQuantity(change) {
+        const quantityInput = document.getElementById("quantityInput");
+        const totalElement = document.getElementById("orderTotal");
 
-        var currentQty = parseInt(quantityInput.value);
+        let currentQuantity = parseInt(quantityInput.value);
 
-        var newQty = currentQty + change;
+        // Ensure quantity does not go below 1 when decreasing
+        if ((change < 0 && currentQuantity > 1) || change > 0) {
+            // Update the quantity
+            currentQuantity += change;
+            quantityInput.value = currentQuantity;  // Set new value in the input field
 
-        if (newQty < 1) {
-            newQty = 1;
+            // Calculate the new total
+            const newTotal = price * currentQuantity;
+
+            // Update the total price on the page (in the orderTotal element)
+            if (totalElement) {
+                totalElement.innerText = newTotal;
+            }
+
+            // If there are hidden fields to update the total and quantity (for form submission)
+            document.getElementById("qty").value = currentQuantity;
+            document.getElementById("totalinput").value = newTotal;
         }
-
-        quantityInput.value = newQty;
-
-        var newTotal = newQty * price;
-        totalInput.value = newTotal;
-
-        document.getElementById('orderTotal-' + productId).innerText = newTotal;
     }
-    function submitForm(button) {
-        const form = button.closest('.container').querySelector('.productForm');
-        form.submit();
-    }
+
 </script>
+
 </body>
 
 </html>
