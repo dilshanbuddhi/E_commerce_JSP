@@ -379,9 +379,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function updateQuantity(change) {
+    function updateQuantity(change, price) {
         const quantityInput = document.getElementById("quantityInput");
         const totalElement = document.getElementById("orderTotal");
+        const totalInput = document.getElementById("totalinput");
 
         let currentQuantity = parseInt(quantityInput.value);
 
@@ -389,19 +390,12 @@
         if ((change < 0 && currentQuantity > 1) || change > 0) {
             // Update the quantity
             currentQuantity += change;
-            quantityInput.value = currentQuantity;  // Set new value in the input field
+            quantityInput.value = currentQuantity;
 
-            // Calculate the new total
-            const newTotal = price * currentQuantity;
-
-            // Update the total price on the page (in the orderTotal element)
-            if (totalElement) {
-                totalElement.innerText = newTotal;
-            }
-
-            // If there are hidden fields to update the total and quantity (for form submission)
-            document.getElementById("qty").value = currentQuantity;
-            document.getElementById("totalinput").value = newTotal;
+            // Update the total price
+            const newTotal = currentQuantity * price;
+            totalElement.textContent = newTotal;
+            totalInput.value = newTotal; // Update the hidden input for form submission
         }
     }
 

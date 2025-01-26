@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.example.ecommerrce_web.entity.OrderDetail" %><%--
   Created by IntelliJ IDEA.
   User: PC
   Date: 1/20/2025
@@ -132,7 +133,7 @@
             </ul>
             <div class="d-flex align-items-center">
                 <!-- Logout Icon -->
-                <a href="#"id="logoutLink" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
+                <a href="#" id="logoutLink" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -164,23 +165,36 @@
                     <thead class="table-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Customer ID</th>
-                        <th>Product ID</th>
+                        <th>Customer Name</th>
+                        <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
+                    <%
+                        List<OrderDetail> orders = (List<OrderDetail>) request.getAttribute("odList");
+                        if (orders != null && !orders.isEmpty()) {
+                            for (OrderDetail order : orders) {
+
+                    %>
+
                     <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Sample Item</td>
-                        <td>Category 1</td>
-                        <td>$10.00</td>
-                        <td>50</td>
+                        <td><%= order.getId() %></td>
+                        <td><%= order.getOrder().getUser().getUserName() %></td>
+                        <td><%= order.getProduct().getName() %></td>
+                        <td><%= order.getPrice() %></td>
+                        <td><%= order.getQuantity() %></td>
+                        <td><%= order.getOrder().getTotal() %></td>
 
                     </tr>
                     <!-- More items can be dynamically added here -->
                     </tbody>
+                    <%
+                        }
+                        }
+                    %>
                 </table>
             </div>
         </div>

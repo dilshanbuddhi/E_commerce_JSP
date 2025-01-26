@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
             query.setParameter("email", email);
             query.setParameter("password", password);
 
-            User user = query.uniqueResult(); // Retrieve the user based on email and password
+            User user = query.uniqueResult();
 
             session.getTransaction().commit();
 

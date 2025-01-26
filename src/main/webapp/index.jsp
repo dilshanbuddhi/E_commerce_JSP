@@ -240,7 +240,7 @@
 %>
 
 <!-- Header / Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color:#bfbfbf;">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="images/dog.png" height="40" width="40"/>  Waggy Pet Shop
@@ -269,8 +269,9 @@
                     <i class="bi bi-box-arrow-in-right"></i>
                 </a>
                 <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
-                <a href="getCartData" class="nav-link position-relative">
+                <a href="#" class="nav-link position-relative" onclick="ifnavigate()">
                     <i class="bi bi-cart"></i></a>
+
             </div>
         </div>
     </div>
@@ -287,19 +288,18 @@
     <div class="input-group mb-3">
         <!-- Dropdown to select category -->
         <form action="getProductViceCategory" id="searchForm">
-            <select name="categoryId" id="categoryDropdown" class="form-select mb-4" onchange="document.getElementById('searchForm').submit()">
+            <select name="categoryId" id="categoryDropdown" class="form-select mb-4" onchange="handleCategoryChange()">
                 <option value="all">All Categories</option>
                 <%
                     if (categoriess != null) {
                         for (Category category : categoriess) {
                 %>
-                <option value="<%= category.getId() %>"><%= category.getName() %> </option>
+                <option value="<%= category.getId() %>"><%= category.getName() %></option>
                 <%
                         }
                     }
                 %>
             </select>
-
         </form>
 
     </div>
@@ -441,7 +441,7 @@
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
                     <input type="hidden" name="userId" value="<%= userId %>">
                 </form>
-                <button class="btn btn-add-cart" onclick="submit(this)">Get Now</button>
+                <button class="btn btn-add-cart" onclick="submit(this,'.productForm')">Get Now</button>
                 <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#addToCartModal<%= product.getId() %>">
                     <i class="bi bi-cart"></i>
                 </button>
@@ -500,52 +500,76 @@
 <script src="JQ/jquery-3.7.1.min.js"></script>
 
 <script>
-let log;
-    $("#testbtn").on("click", function() {
-        console.log("clicked");
-        log = <%=userId%>;
-        console.log(log);
-    })
 
-    function addCart(button) {
-        // Get the modal form closest to the button clicked
-        var form = $(button).closest('form');
+    function ifnavigate() {
+        let userid = <%= userId %>;  // Initialize userid here before using it
+        console.log(userid, 'cart ekata yanawa nadda kiyna eka');
 
-        // Get product ID and quantity values from the form
-        var productId = form.find('input[name="productId"]').val();
-        var quantity = form.find('input[name="quantity"]').val();
-
-        // Send an AJAX POST request to the server
-        $.ajax({
-            url: '/addToCart', // Your server endpoint
-            type: 'POST',
-            data: {
-                productId: productId,
-                quantity: quantity
-            },
-            success: function(response) {
-                // Handle success (e.g., show a message or update cart UI)
-                alert('Product added to cart successfully!');
-                // Optionally, close the modal
-                $(form).closest('.modal').modal('hide');
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                alert('Error adding product to cart: ' + error);
-            }
-        });
+        if (userid == null || userid === "") {
+            alert("Please login first");
+        } else {
+            window.location.href = "getCartData";
+        }
     }
 
-    function submit(button) {
+    function addCart(button) {
+        let loginId = <%= userId %>;
+        console.log(loginId, ' login id for add cart')
+        if (loginId != null) {
+            var form = $(button).closest('form');
+            var productId = form.find('input[name="productId"]').val();
+            var quantity = form.find('input[name="quantity"]').val();
+
+            $.ajax({
+                url: '/addToCart', // Your server endpoint
+                type: 'POST',
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    // Handle success (e.g., show a message or update cart UI)
+                    alert('Product added to cart successfully!');
+                    // Optionally, close the modal
+                    $(form).closest('.modal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    alert('Error adding product to cart: ' + error);
+                }
+            });
+        } else {
+            alert("login first");
+        }
+
+    }
+
+    function submit(button, link) {
         console.log("me hutta en na");
-        console.log(log,  "awa")
-        if (log != null) {
+        let loginId = <%= userId %>;
+        console.log(loginId, "awa")
+        console.log(link, "link eka")
+        if (loginId != null) {
             console.log("null na")
-           $(button).siblings('.productForm').submit();
-        }else {
+            $(button).siblings(link).submit();
+        } else {
             alert("login first");
         }
     }
+
+    function handleCategoryChange() {
+        let dropdown = document.getElementById('categoryDropdown');
+        let selectedValue = dropdown.value;
+
+        if (selectedValue !== 'all') {
+        document.getElementById('searchForm').submit();
+    } else {
+        // Optionally handle 'all' value differently
+        console.log('All categories selected, not submitting the form.');
+    }
+    }
+
+
 </script>
 
 <!-- Footer -->
