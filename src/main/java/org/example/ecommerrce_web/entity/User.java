@@ -21,9 +21,9 @@ public class User {
     private String password;
     private String role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cart> cart;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" )
     private List<Orders> order;
 
     public User(Long userId, String userName, String email, String password, String role) {

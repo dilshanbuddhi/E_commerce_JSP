@@ -54,7 +54,8 @@ public class AddUserServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("addUser");
+        resp.sendRedirect("addUser?userSaved=success");
+        req.setAttribute("userSaved", "success");
     }
 
     @Override

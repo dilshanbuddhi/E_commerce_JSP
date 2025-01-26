@@ -21,6 +21,8 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         /* Applying the playful Baloo 2 font to key sections */
         body {
@@ -127,6 +129,25 @@
     </style>
 </head>
 <body>
+<%
+    String isSuccess=request.getParameter("userSaved");
+    System.out.println("isSuccess"+isSuccess);
+    if (isSuccess!=null){
+%>
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'User Saved Successfully',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+<%
+    }
+%>
+
+
 
 <!-- Header / Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -140,10 +161,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_dashboard.jsp">Home</a>
+                    <a class="nav-link active" href="admin_dashboard.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active"  href="addUser">User</a>
+                    <a class="nav-link" href="addUser">User</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="saveCategory">Category</a>
@@ -152,12 +173,12 @@
                     <a class="nav-link" href="getProductList">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="orderView.jsp">Order</a>
+                    <a class="nav-link" href="getAllOrders">Order</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
                 <!-- Logout Icon -->
-                <a href="#" class="nav-link" id="logoutLink"><i class="bi bi-box-arrow-right"></i></a>
+                <a href="#" id="logoutLink" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
     </div>

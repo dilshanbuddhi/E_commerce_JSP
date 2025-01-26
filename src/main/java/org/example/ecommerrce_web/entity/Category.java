@@ -20,6 +20,6 @@ public class Category {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> products;
 }

@@ -243,7 +243,7 @@
 %>
 
 <!-- Header / Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color:#bfbfbf;">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="images/dog.png" height="40" width="40"/>  Waggy Pet Shop
@@ -254,7 +254,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="getAllProduct">Home</a>
+                    <a class="nav-link" href="getAllProductForCustomer">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Shop</a>
@@ -272,14 +272,14 @@
                     <i class="bi bi-box-arrow-in-right"></i>
                 </a>
                 <a href="#" class="nav-link"><i class="bi bi-heart"></i></a>
-                <a href="getCartData" class="nav-link position-relative">
+                <a href="#" class="nav-link position-relative" onclick="ifnavigate()">
                     <i class="bi bi-cart"></i></a>
+
             </div>
         </div>
     </div>
 </nav>
 
-<a href="admin_dashboard.jsp">admin </a>
 <!-- Search Bar -->
 <div class="container my-4">
     <%
@@ -328,7 +328,6 @@
     </div>
 </section>
 
-<button id="testbtn"> click me</button>
 
 <%--
 <Section id="cardSec">

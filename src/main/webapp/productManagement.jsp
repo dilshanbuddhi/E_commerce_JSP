@@ -134,7 +134,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_dashboard.jsp">Home</a>
+                    <a class="nav-link active" href="admin_dashboard.jsp">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="addUser">User</a>
@@ -143,10 +143,10 @@
                     <a class="nav-link" href="saveCategory">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="getProductList">Product</a>
+                    <a class="nav-link" href="getProductList">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="orderView.jsp">Order</a>
+                    <a class="nav-link" href="getAllOrders">Order</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">

@@ -26,10 +26,10 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product" , cascade = CascadeType.ALL)
     private List<Cart> cart;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetail;
 
     public Product(long id, String name, double price, int quantity, String imageUrl) {

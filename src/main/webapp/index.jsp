@@ -14,6 +14,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
@@ -186,7 +187,7 @@
             transform: scale(1.2); /* Slightly scale up the heart icon */
         }
         .categoryName {
-            font-size: 75px;
+            font-size: 60px;
             color: #443e30;
             border-radius: 30px;
             background: linear-gradient(90deg, rgba(244,225,176,1) 0%, rgba(255,225,198,1) 35%, rgba(252,245,238,1) 62%, rgba(255,255,255,1) 100%);        }
@@ -251,7 +252,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="getAllProduct">Home</a>
+                    <a class="nav-link" href="getAllProductForCustomer">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Shop</a>
@@ -277,7 +278,6 @@
     </div>
 </nav>
 
-<a href="admin_dashboard.jsp">admin </a>
 <!-- Search Bar -->
 <div class="container my-4">
     <%
@@ -325,7 +325,6 @@
     </div>
 </section>
 
-<button id="testbtn"> click me</button>
 
 <%--
 <Section id="cardSec">
@@ -539,13 +538,15 @@
                 }
             });
         } else {
-            alert("login first");
-        }
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please login first",
+            });         }
 
     }
 
     function submit(button, link) {
-        console.log("me hutta en na");
         let loginId = <%= userId %>;
         console.log(loginId, "awa")
         console.log(link, "link eka")
@@ -553,8 +554,11 @@
             console.log("null na")
             $(button).siblings(link).submit();
         } else {
-            alert("login first");
-        }
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please login first",
+            });        }
     }
 
     function handleCategoryChange() {
@@ -564,7 +568,6 @@
         if (selectedValue !== 'all') {
         document.getElementById('searchForm').submit();
     } else {
-        // Optionally handle 'all' value differently
         console.log('All categories selected, not submitting the form.');
     }
     }

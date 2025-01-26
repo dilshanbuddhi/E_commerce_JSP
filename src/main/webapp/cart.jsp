@@ -29,11 +29,12 @@
         }
 
         .hero-section {
-            padding-top: 0;
+            padding-top: 10px;
             background-color: #f8f2eb;
         }
 
         .hero-section h1 {
+            margin-top: 50px;
             color: #6c757d;
             font-weight: lighter;
             font-size: 4rem;
@@ -264,8 +265,8 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6" id="text">
-                <h1 class="display-4">Your <span>Fav</span></h1>
-                <p>Cart </p>
+                <h1 class="display-4">Your <span>cart</span></h1>
+                <p>Cart Product Here </p>
             </div>
         </div>
     </div>
@@ -339,12 +340,20 @@
                         <!-- Quantity Control -->
                         <div class="d-flex align-items-center justify-content-between">
                             <p style="color: #95a5a6;">Quantity: <span id="orderQuantity" class="fw-bold">In Stock : <%= product.getQuantity() %></span></p>
-                            <button class="btn btn-outline-secondary btn-sm" id="decreaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(-1,<%= product.getPrice() %>)">-</button>
-                            <input type="text" id="quantityInput" class="form-control text-center" value="1" style="width: 50px;" readonly>
-                            <button class="btn btn-outline-secondary btn-sm" id="increaseQty" style="border-radius: 50%; width: 32px; height: 32px;" onclick="updateQuantity(1)">+</button>
+                            <input type="number" id="quantityInput" class="form-control text-center" value="<%= cart.getQuantity() %>" style="width: 100px;" onclick="generateOrderTotal(this,<%= product.getPrice() %>)" required>
+                            <script>
+                          function generateOrderTotal(input, price) {
+                            var quantity = parseInt(input.value);
+                            var total = quantity * price;
+
+                            document.getElementById('orderTotal').textContent = total;
+                            document.getElementById('totalinput-<%= product.getId() %>').value = total;
+                            document.getElementById('qty-<%= product.getId() %>').value = quantity;
+                          }
+                            </script>
                         </div>
                         <hr>
-                        <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice() %></span>/=</p>
+                        <p class="fw-bold" style="color: #16a085;">Total: Rs <span id="orderTotal"><%= product.getPrice()*cart.getQuantity() %></span>/=</p>
                     </div>
 
                     <div class="modal-footer border-0 d-flex justify-content-between">
